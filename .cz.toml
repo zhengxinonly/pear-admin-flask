@@ -1,0 +1,69 @@
+[tool.commitizen]
+name = "cz_customize"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+update_changelog_on_bump = true
+major_version_zero = true
+
+[tool.commitizen.customize]
+message_template = "{{change_type}}{% if scope %}({{scope}}){% endif %}:{% if subject %} {{subject}}{% endif %} {% if footer %} {{footer}}{% endif %}"
+example = "feature: this feature enable customize through config file"
+schema = "<type>: <body>"
+schema_pattern = "(feature|fix|docs|style|refactor|perf|test|revert|build).*?:(\\s.*)"
+bump_pattern = "^(break|new|fix|hotfix)"
+bump_map = { "break" = "MAJOR", "new" = "MINOR", "fix" = "PATCH", "hotfix" = "PATCH" }
+change_type_order = ["BREAKING CHANGE", "feat", "fix", "refactor", "perf"]
+info_path = "cz_customize_info.txt"
+info = """
+This is customized info
+"""
+commit_parser = "^(?P<change_type>feature|fix|docs|style|refactor|perf|test|revert|build).*?:\\s(?P<message>.*)?"
+changelog_pattern = "^(feature|fix|docs|style|refactor|perf|test|revert|build)?(!)?"
+change_type_map = { "feature" = "Feat", "bug fix" = "Fix" }
+
+
+# 自定义提交指令
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "change_type"
+choices = [
+    { value = "feature", name = "feature: 新功能" },
+    { value = "fix", name = "fix: 修复 bug" },
+    { value = "docs", name = "docs: 文档的修改" },
+    { value = "style", name = "style: 格式化变动，不影响代码逻辑" },
+    { value = "refactor", name = "refactor: 重构，即不是新增功能，也不是修改 bug 的代码变动" },
+    { value = "perf", name = "perf: 性能优化" },
+    { value = "test", name = "test: 增加测试" },
+    { value = "revert", name = "revert: 回退" },
+    { value = "build", name = "build: 打包" },
+]
+# choices = ["feature", "fix"]  # short version
+message = "请选择提交类型："
+
+
+# 修改内容的范围
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "scope"
+message = "请输入修改内容的范围（可选）："
+
+
+# 自己的提交内容
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "subject"
+message = "请输入简要描述（必填）："
+
+
+# 自己的提交内容
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "body"
+message = "请输入详细描述（可选）："
+
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "footer"
+message = "请输入需要关闭的 issue（可选）："

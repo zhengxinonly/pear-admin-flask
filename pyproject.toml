@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "pear-admin-flask"
+version = "0.1.0"
+description = "flask + pear admin layui"
+authors = ["zhengxinonly <pyxxponly@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^2.3.3"
+
+
+[tool.poetry.group.dev.dependencies]
+python-dotenv = "^1.0.0"
+pre-commit = "^3.4.0"
+commitizen = "^3.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
