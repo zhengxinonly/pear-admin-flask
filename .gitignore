@@ -1,3 +1,5 @@
 .idea/
 .venv/
 *.py[cod]
+instance/
+migrations/

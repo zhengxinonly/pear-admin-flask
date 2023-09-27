@@ -2,6 +2,7 @@ from flask import Flask
 
 from configs import config
 from pear_admin.extensions import register_extensions
+from pear_admin.orms import UserORM
 
 
 def create_app(config_name="dev"):
