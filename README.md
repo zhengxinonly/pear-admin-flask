@@ -1,5 +1,3 @@
-
-
 ## 贡献指南
 
 如果想参与项目的贡献，提交代码之前需要启用 pre-commit、commitizen 对代码进行校验，运行以下指令即可。
@@ -26,4 +24,9 @@ pre-commit run --all-files
 pre-commit install -t commit-msg
 ```
 
-使用 `cz commit` 代替 `git commit` 进行提交
+使用 
+```shell
+cz commit
+```
+代替 `git commit` 进行提交
+
