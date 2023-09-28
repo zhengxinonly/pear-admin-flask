@@ -11,13 +11,13 @@ class RoleORM(BaseORM):
     code = db.Column(db.String(20), nullable=False, comment="角色标识符")
     desc = db.Column(db.Text)
 
-    permission_ids = db.Column(
+    rights_ids = db.Column(
         db.String(512),
         comment="权限ids,1,2,5。冗余字段，用户缓存用户权限",
     )
 
-    permission_list = db.relationship(
-        "RightsORM", secondary="ums_role_permission", backref=db.backref("role")
+    rights_list = db.relationship(
+        "RightsORM", secondary="ums_role_rights", backref=db.backref("role")
     )
 
     def json(self):
@@ -25,5 +25,5 @@ class RoleORM(BaseORM):
             "id": self.id,
             "name": self.name,
             "desc": self.desc,
-            "permission_ids": self.permission_ids,
+            "rights_ids": self.rights_ids,
         }

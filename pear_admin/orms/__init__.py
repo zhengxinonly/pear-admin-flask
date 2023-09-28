@@ -12,7 +12,7 @@ user_role = db.Table(
     db.Column("role_id", db.Integer, db.ForeignKey("ums_role.id"), comment="角色编号"),
 )
 
-role_permission = db.Table(
+role_rights = db.Table(
     "ums_role_rights",  # 用户-权限中间表名称
     db.Column("id", db.Integer, primary_key=True, autoincrement=True, comment="标识"),
     db.Column("rights_id", db.Integer, db.ForeignKey("ums_rights.id"), comment="用户编号"),

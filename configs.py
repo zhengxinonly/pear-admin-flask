@@ -6,6 +6,8 @@ class BaseConfig:
 
     SQLALCHEMY_DATABASE_URI = ""
 
+    ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
 
 class DevelopmentConfig(BaseConfig):
     """开发配置"""
