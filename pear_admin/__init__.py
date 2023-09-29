@@ -3,6 +3,7 @@ from flask import Flask
 from configs import config
 from pear_admin.extensions import register_extensions
 from pear_admin.orms import UserORM
+from pear_admin.views import register_views
 
 
 def create_app(config_name="dev"):
@@ -12,8 +13,6 @@ def create_app(config_name="dev"):
 
     register_extensions(app)
 
-    @app.route("/")
-    def index():
-        return "hello pear-admin-flask !"
+    register_views(app)
 
     return app

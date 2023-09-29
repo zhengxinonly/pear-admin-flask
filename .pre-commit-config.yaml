@@ -9,3 +9,20 @@ repos:
     hooks:
       - id: isort
         args: [ "--profile", "black", "--filter-files" ]
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: "v3.0.3"
+    hooks:
+      - id: prettier
+        exclude: >
+          (?x)^(
+              .*.yaml|
+              package-lock.json|
+              yarn.lock|
+              ^.+\.min\.(js|css)$
+          )$
+        stages: [ commit ]
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: 3.5.3
+    hooks:
+      - id: commitizen
+        stages: [ commit-msg ]

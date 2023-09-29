@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "工作空间",
+    "icon": "layui-icon layui-icon-console",
+    "type": 0,
+    "children": [
+      {
+        "id": "10",
+        "title": "分析页",
+        "icon": "layui-icon layui-icon-console",
+        "type": 1,
+        "openType": "_component",
+        "href": "view/analysis/index.html"
+      },
+      {
+        "id": "11",
+        "title": "工作台",
+        "icon": "layui-icon layui-icon-console",
+        "type": 1,
+        "openType": "_component",
+        "href": "view/console/index.html"
+      }
+    ]
+  }
+]

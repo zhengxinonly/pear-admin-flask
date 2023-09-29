@@ -1,0 +1,12 @@
+.demo-login-container {
+  width: 320px;
+  margin: 220px auto 0;
+}
+
+.demo-login-other .layui-icon {
+  position: relative;
+  display: inline-block;
+  margin: 0 2px;
+  top: 2px;
+  font-size: 26px;
+}

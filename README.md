@@ -24,9 +24,10 @@ pre-commit run --all-files
 pre-commit install -t commit-msg
 ```
 
-使用 
+使用
+
 ```shell
 cz commit
 ```
-代替 `git commit` 进行提交
 
+代替 `git commit` 进行提交
