@@ -1,14 +1,17 @@
 from flask import Blueprint, render_template
+from flask_jwt_extended import jwt_required
 
 index_bp = Blueprint("index", __name__)
 
 
 @index_bp.route("/")
+@jwt_required()
 def index():
     return render_template("index.html")
 
 
 @index_bp.route("/login.html")
+@index_bp.route("/login")
 def login():
     return render_template("login.html")
 

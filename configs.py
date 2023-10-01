@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 
 class BaseConfig:
@@ -7,6 +8,9 @@ class BaseConfig:
     SQLALCHEMY_DATABASE_URI = ""
 
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+    JWT_TOKEN_LOCATION = ["headers", "cookies"]
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(days=7)
 
 
 class DevelopmentConfig(BaseConfig):
