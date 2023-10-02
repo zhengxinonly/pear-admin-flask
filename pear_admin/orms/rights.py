@@ -1,3 +1,5 @@
+from sqlalchemy.orm import backref
+
 from pear_admin.extensions import db
 
 from ._base import BaseORM
@@ -23,7 +25,10 @@ class RightsORM(BaseORM):
         comment="父类编号",
     )
 
-    # parent = db.relationship("RightsORM", remote_side=[pid])  # 自关联
+    parent = db.relationship(
+        "RightsORM", back_populates="children", remote_side=[id]
+    )  # 自关联
+    children = db.relationship("RightsORM", back_populates="parent")
 
     def json(self):
         return {
@@ -32,7 +37,7 @@ class RightsORM(BaseORM):
             "code": self.code,
             "type": self.type,
             "url": self.url,
-            "icon": self.icon,
+            "icon_sign": self.icon,
             "status": self.status,
             "sort": self.sort,
             "open_type": self.open_type,
@@ -45,10 +50,10 @@ class RightsORM(BaseORM):
         return {
             "id": self.id,
             "pid": self.pid,
-            "rights_id": self.id,
             "title": self.name,
             "type": type_map_dict[self.type],
             "href": self.url,
             "icon": self.icon,
             "sort": self.sort,
+            "openType": self.open_type,
         }

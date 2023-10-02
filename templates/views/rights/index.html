@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>权限管理</title>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+  </head>
+
+  <body>
+    <div style="padding: 16px">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <table
+            class="layui-hide"
+            id="rights-table"
+            lay-filter="rights-table"
+          ></table>
+        </div>
+      </div>
+    </div>
+    <script type="text/html" id="rights-toolbar">
+      <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="toolbar-add">
+          新增权限
+        </button>
+      </div>
+    </script>
+    <script type="text/html" id="rights-tool">
+      <div class="layui-btn-container">
+        <button
+          class="layui-btn layui-btn-sm layui-bg-blue"
+          lay-event="rights-tool-edit"
+        >
+          编辑
+        </button>
+        <button
+          class="layui-btn layui-btn-sm layui-bg-red"
+          lay-event="rights-tool-del"
+        >
+          删除
+        </button>
+      </div>
+    </script>
+    <script>
+      layui.use(function () {
+        var treeTable = layui.treeTable;
+        treeTable.render({
+          elem: "#rights-table",
+          url: "/api/v1/rights?type=treetable", // 此处为静态模拟数据，实际使用时需换成真实接口
+          height: "full-35", // 最大高度减去其他容器已占有的高度差
+          toolbar: "#rights-toolbar",
+          cols: [
+            [
+              { type: "checkbox", fixed: "left" },
+              {
+                field: "id",
+                title: "ID",
+                width: 80,
+                sort: true,
+                fixed: "left",
+              },
+              { field: "name", title: "权限名", width: 180 },
+              { field: "code", title: "权限标识", width: 150 },
+              {
+                field: "icon_sign",
+                title: "图标",
+                width: 90,
+                templet: (d) => {
+                  return `<i class="${d.icon_sign}"></i> `;
+                },
+              },
+              { field: "open_type", title: "打开方式", width: 100 },
+              {
+                field: "status",
+                title: "状态",
+                width: 100,
+                templet: (d) => {
+                  return `<input type="checkbox" name="status" value="${
+                    d.id
+                  }" title="启用|禁用" lay-skin="switch" ${
+                    d.status ? "checked" : ""
+                  } lay-filter="rights-table-switch-status"/>`;
+                },
+              },
+              {
+                field: "type",
+                title: "类型",
+                width: 100,
+                templet: (d) => {
+                  if (d.type === "menu") {
+                    return `<button type="button" class="layui-btn layui-btn-sm layui-btn-radius">菜单</button>`;
+                  } else if (d.type === "path") {
+                    return `<button type="button" class="layui-btn layui-btn-sm layui-btn-radius layui-btn-normal">路径</button>`;
+                  } else if (d.type === "auth") {
+                    return `<button type="button" class="layui-btn layui-btn-sm layui-btn-radius layui-bg-purple">权限</button>`;
+                  }
+                },
+              },
+              {
+                fixed: "right",
+                title: "操作",
+                width: 120,
+                align: "center",
+                toolbar: "#rights-tool",
+              },
+            ],
+          ],
+          page: true,
+        });
+
+        treeTable.on("toolbar(rights-table)", function (obj) {
+          if (obj.event === "rights-toolbar-add") {
+            console.log("新增权限");
+          }
+        });
+
+        treeTable.on("tool(rights-table)", function (obj) {
+          var layEvent = obj.event;
+          if (layEvent === "rights-tool-edit") {
+            console.log("编辑权限");
+          } else if (layEvent === "rights-tool-del") {
+            console.log("删除权限");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
