@@ -1,4 +1,4 @@
-id,name,code,type,url,icon,status,sort,open_type,pid
+id,name,code,type,url,icon_sign,status,sort,open_type,pid
 100,系统管理,ums:rights,menu,,layui-icon layui-icon-set-fill,,2,,0
 101,权限管理,ums:rights:list,path,/views/rights,layui-icon layui-icon-console,,1,,100
 102,新增权限,ums:rights:create,auth,,,,0,,101

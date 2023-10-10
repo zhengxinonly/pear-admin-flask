@@ -25,7 +25,7 @@
     </div>
     <script type="text/html" id="rights-toolbar">
       <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="toolbar-add">
+        <button class="layui-btn layui-btn-sm" lay-event="rights-toolbar-add">
           新增权限
         </button>
       </div>
@@ -46,11 +46,156 @@
         </button>
       </div>
     </script>
+    <form
+      class="layui-form"
+      lay-filter="rights-form"
+      id="rights-form"
+      style="padding: 15px"
+    >
+      <div class="layui-form-item" style="display: none">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="id"
+            value="0"
+            lay-verify="required"
+            placeholder="请输入权限名"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">权限名</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="name"
+            lay-verify="required"
+            placeholder="请输入权限名"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">权限标识</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="code"
+            autocomplete="off"
+            lay-reqtext="请输入权限标识"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">图标</label>
+        <div class="layui-input-inline">
+          <input
+            type="text"
+            name="icon_sign"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+
+      <div class="layui-form-item">
+        <label class="layui-form-label">权限类型</label>
+        <div class="layui-input-block">
+          <input type="radio" name="type" value="menu" title="菜单" checked />
+          <input type="radio" name="type" value="path" title="路由" />
+          <input type="radio" name="type" value="auth" title="权限" />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">访问地址</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="code"
+            lay-verify=""
+            placeholder="权限类路由时输入访问地址，其他情况下不需要输入"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+          <input
+            type="checkbox"
+            name="status"
+            lay-skin="switch"
+            lay-filter="rights-row-status"
+            checked
+            title="启用|禁用"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">序号</label>
+        <div class="layui-input-inline">
+          <input
+            type="text"
+            name="sort"
+            placeholder=""
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">打开方式</label>
+        <div class="layui-input-inline">
+          <input
+            type="text"
+            name="open_type"
+            placeholder=""
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">父元素 ID</label>
+        <div class="layui-input-inline">
+          <input
+            type="text"
+            name="pid"
+            placeholder=""
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button
+            type="submit"
+            class="layui-btn"
+            lay-submit
+            lay-filter="rights-form-btn"
+          >
+            立即提交
+          </button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
     <script>
       layui.use(function () {
         var treeTable = layui.treeTable;
+        var $ = layui.$;
+        var form = layui.form;
+        var layer = layui.layer;
         treeTable.render({
           elem: "#rights-table",
+          id: "rights-table",
           url: "/api/v1/rights?type=treetable", // 此处为静态模拟数据，实际使用时需换成真实接口
           height: "full-35", // 最大高度减去其他容器已占有的高度差
           toolbar: "#rights-toolbar",
@@ -67,27 +212,6 @@
               { field: "name", title: "权限名", width: 180 },
               { field: "code", title: "权限标识", width: 150 },
               {
-                field: "icon_sign",
-                title: "图标",
-                width: 90,
-                templet: (d) => {
-                  return `<i class="${d.icon_sign}"></i> `;
-                },
-              },
-              { field: "open_type", title: "打开方式", width: 100 },
-              {
-                field: "status",
-                title: "状态",
-                width: 100,
-                templet: (d) => {
-                  return `<input type="checkbox" name="status" value="${
-                    d.id
-                  }" title="启用|禁用" lay-skin="switch" ${
-                    d.status ? "checked" : ""
-                  } lay-filter="rights-table-switch-status"/>`;
-                },
-              },
-              {
                 field: "type",
                 title: "类型",
                 width: 100,
@@ -99,6 +223,29 @@
                   } else if (d.type === "auth") {
                     return `<button type="button" class="layui-btn layui-btn-sm layui-btn-radius layui-bg-purple">权限</button>`;
                   }
+                },
+              },
+              { field: "url", title: "访问地址", width: 200 },
+              {
+                field: "icon_sign",
+                title: "图标",
+                width: 90,
+                templet: (d) => {
+                  return `<i class="${d.icon_sign}"></i> `;
+                },
+              },
+              { field: "open_type", title: "打开方式", width: 100 },
+              { field: "sort", title: "排序", width: 100 },
+              {
+                field: "status",
+                title: "状态",
+                width: 100,
+                templet: (d) => {
+                  return `<input type="checkbox" name="status" value="${
+                    d.id
+                  }" title="启用|禁用" lay-skin="switch" ${
+                    d.status ? "checked" : ""
+                  } lay-filter="rights-table-switch-status"/>`;
                 },
               },
               {
@@ -115,14 +262,58 @@
 
         treeTable.on("toolbar(rights-table)", function (obj) {
           if (obj.event === "rights-toolbar-add") {
-            console.log("新增权限");
+            layer.open({
+              type: 1,
+              shade: false,
+              content: $("#rights-form"),
+              area: ["50%", "80%"],
+            });
+            form.render($("#rights-form"));
           }
+        });
+
+        // 提交事件
+        form.on("submit(rights-form-btn)", function (data) {
+          let field = data.field;
+          field.status = !!field.status;
+          let method, url;
+          if (field.id == 0) {
+            field.id = null;
+            method = "POST";
+            url = "/api/v1/rights";
+          } else {
+            method = "PUT";
+            url = `/api/v1/rights/${field.id}`;
+          }
+          $.ajax({
+            url: url,
+            type: method,
+            contentType: "application/json",
+            headers: {
+              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
+            },
+            data: JSON.stringify(field),
+            success: function (res) {
+              if (!res.code) {
+                layer.closeAll();
+                treeTable.reloadData("rights-table");
+              }
+            },
+          });
+
+          return false; // 阻止默认 form 跳转
         });
 
         treeTable.on("tool(rights-table)", function (obj) {
           var layEvent = obj.event;
           if (layEvent === "rights-tool-edit") {
-            console.log("编辑权限");
+            form.val("rights-form", obj.data);
+            layer.open({
+              type: 1,
+              shade: false,
+              content: $("#rights-form"),
+              area: ["50%", "80%"],
+            });
           } else if (layEvent === "rights-tool-del") {
             console.log("删除权限");
           }

@@ -33,3 +33,25 @@ def rights_list():
             data["isParent"] = True
         ret.append(data)
     return {"code": 0, "message": "请求权限数据成功", "count": pages.total, "data": ret}
+
+
+@rights_api.post("/rights")
+@jwt_required()
+def create_rights():
+    data = request.get_json()
+    rights_obj = RightsORM(**data)
+    rights_obj.save()
+    return {"code": 0, "message": "新增权限数据成功"}
+
+
+@rights_api.put("/rights/<int:rid>")
+@jwt_required()
+def change_rights(rid):
+    data = request.get_json()
+    del data["id"]
+
+    rights_obj = RightsORM.query.get(rid)
+    for key, value in data.items():
+        setattr(rights_obj, key, value)
+    rights_obj.save()
+    return {"code": 0, "message": "修改权限数据成功"}

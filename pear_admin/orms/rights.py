@@ -14,9 +14,9 @@ class RightsORM(BaseORM):
     type = db.Column(db.String(30), comment="权限类型")
     url = db.Column(db.String(30), comment="路径地址")
 
-    icon = db.Column(db.String(128), comment="图标")
+    icon_sign = db.Column(db.String(128), comment="图标")
     status = db.Column(db.Boolean, default=True, comment="是否开启")
-    sort = db.Column(db.Integer, default=1)
+    sort = db.Column(db.Integer, default=0)
     open_type = db.Column(db.String(128), comment="打开方式")
     pid = db.Column(
         db.Integer,
@@ -37,7 +37,7 @@ class RightsORM(BaseORM):
             "code": self.code,
             "type": self.type,
             "url": self.url,
-            "icon_sign": self.icon,
+            "icon_sign": self.icon_sign,
             "status": self.status,
             "sort": self.sort,
             "open_type": self.open_type,
@@ -53,7 +53,7 @@ class RightsORM(BaseORM):
             "title": self.name,
             "type": type_map_dict[self.type],
             "href": self.url,
-            "icon": self.icon,
+            "icon": self.icon_sign,
             "sort": self.sort,
             "openType": self.open_type,
         }
