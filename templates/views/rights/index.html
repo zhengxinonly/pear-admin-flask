@@ -50,7 +50,7 @@
       class="layui-form"
       lay-filter="rights-form"
       id="rights-form"
-      style="padding: 15px"
+      style="padding: 15px; display: none"
     >
       <div class="layui-form-item" style="display: none">
         <label class="layui-form-label">ID</label>
@@ -86,7 +86,7 @@
             type="text"
             name="code"
             autocomplete="off"
-            lay-reqtext="请输入权限标识"
+            placeholder="请输入权限标识"
             class="layui-input"
           />
         </div>
@@ -102,7 +102,6 @@
           />
         </div>
       </div>
-
       <div class="layui-form-item">
         <label class="layui-form-label">权限类型</label>
         <div class="layui-input-block">
@@ -116,7 +115,7 @@
         <div class="layui-input-block">
           <input
             type="text"
-            name="code"
+            name="url"
             lay-verify=""
             placeholder="权限类路由时输入访问地址，其他情况下不需要输入"
             autocomplete="off"
@@ -146,6 +145,7 @@
             placeholder=""
             autocomplete="off"
             class="layui-input"
+            value="1"
           />
         </div>
       </div>
@@ -315,7 +315,19 @@
               area: ["50%", "80%"],
             });
           } else if (layEvent === "rights-tool-del") {
-            console.log("删除权限");
+            $.ajax({
+              url: `/api/v1/rights/${obj.data.id}`,
+              type: "DELETE",
+              contentType: "application/json",
+              headers: {
+                "X-CSRF-TOKEN": getCookie("csrf_access_token"),
+              },
+              success: function (res) {
+                if (!res.code) {
+                  treeTable.reloadData("rights-table");
+                }
+              },
+            });
           }
         });
       });

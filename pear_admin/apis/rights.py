@@ -39,6 +39,10 @@ def rights_list():
 @jwt_required()
 def create_rights():
     data = request.get_json()
+    if not data["pid"]:
+        data["pid"] = 0
+    if not data["sort"]:
+        data["sort"] = int(data["sort"])
     rights_obj = RightsORM(**data)
     rights_obj.save()
     return {"code": 0, "message": "新增权限数据成功"}
@@ -55,3 +59,11 @@ def change_rights(rid):
         setattr(rights_obj, key, value)
     rights_obj.save()
     return {"code": 0, "message": "修改权限数据成功"}
+
+
+@rights_api.delete("/rights/<int:rid>")
+@jwt_required()
+def delete_rights(rid):
+    rights_obj = RightsORM.query.get(rid)
+    rights_obj.delete()
+    return {"code": 0, "message": "删除权限数据成功"}
