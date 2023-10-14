@@ -24,6 +24,7 @@ class RoleORM(BaseORM):
         return {
             "id": self.id,
             "name": self.name,
+            "code": self.code,
             "desc": self.desc,
             "rights_ids": self.rights_ids,
         }
