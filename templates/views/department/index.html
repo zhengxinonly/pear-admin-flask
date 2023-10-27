@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <title>部门管理</title>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+  </head>
+  <body>
+    <div style="padding: 16px">
+      <div class="layui-card">
+        <div class="layui-card-body">
+          <table
+            class="layui-hide"
+            id="department-table"
+            lay-filter="department-table"
+          ></table>
+        </div>
+      </div>
+    </div>
+    <form
+      class="layui-form"
+      lay-filter="department-form"
+      id="department-form"
+      action=""
+      style="padding: 15px; display: none"
+    >
+      <div class="layui-form-item">
+        <label class="layui-form-label">ID</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="id"
+            value="0"
+            lay-verify="required"
+            autocomplete="off"
+            class="layui-input"
+            disabled
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">部门名</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="name"
+            placeholder="请输入部门名"
+            lay-verify="required"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">负责人</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="leader"
+            placeholder="请输入负责人"
+            lay-verify="required"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-input-block">
+          <input
+            type="checkbox"
+            name="enable"
+            lay-skin="switch"
+            autocomplete="off"
+            checked
+            title="启用|禁用"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <label class="layui-form-label">上级部门ID</label>
+        <div class="layui-input-block">
+          <input
+            type="text"
+            name="pid"
+            placeholder="请输入上级部门id"
+            autocomplete="off"
+            class="layui-input"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
+        <div class="layui-input-block">
+          <button
+            type="submit"
+            class="layui-btn"
+            lay-submit
+            lay-filter="department-form-btn"
+          >
+            立即提交
+          </button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+      </div>
+    </form>
+    <script type="text/html" id="department-toolbar">
+      <div class="layui-btn-container">
+        <button
+          class="layui-btn layui-btn-sm"
+          lay-event="department-toolbar-add"
+        >
+          新增部门
+        </button>
+      </div>
+    </script>
+    <script type="text/html" id="department-tool">
+      <div class="layui-btn-container">
+        <button
+          class="layui-btn layui-btn-sm layui-bg-blue"
+          lay-event="department-tool-edit"
+        >
+          编辑
+        </button>
+        <button
+          class="layui-btn layui-btn-sm layui-bg-red"
+          lay-event="department-tool-del"
+        >
+          删除
+        </button>
+      </div>
+    </script>
+    <script>
+      layui.use(function () {
+        var treeTable = layui.treeTable;
+        var $ = layui.$;
+        var form = layui.form;
+
+        treeTable.render({
+          elem: "#department-table",
+          id: "department-table",
+          url: "/api/v1/department?type=tree", // 此处为静态模拟数据，实际使用时需换成真实接口
+          height: "full-35", // 最大高度减去其他容器已占有的高度差
+          toolbar: "#department-toolbar",
+          page: true,
+          cols: [
+            [
+              //标题栏
+              { field: "id", title: "ID", width: 80, sort: true },
+              { field: "name", title: "部门名", width: 220 },
+              { field: "leader", title: "负责人", width: 160 },
+              { field: "enable", title: "状态", width: 80 },
+              {
+                fixed: "right",
+                title: "操作",
+                width: 120,
+                align: "center",
+                toolbar: "#department-tool",
+              },
+            ],
+          ],
+        });
+
+        treeTable.on("toolbar(department-table)", function (obj) {
+          if (obj.event === "department-toolbar-add") {
+            layer.open({
+              type: 1,
+              shade: false,
+              content: $("#department-form"),
+              area: ["50%", "80%"],
+            });
+            form.render($("#department-form"));
+          }
+        });
+
+        treeTable.on("tool(department-table)", function (obj) {
+          if (obj.event === "department-tool-edit") {
+            form.val("department-form", obj.data);
+            layer.open({
+              type: 1,
+              shade: false,
+              content: $("#department-form"),
+              area: ["50%", "80%"],
+            });
+          } else if (obj.event === "department-tool-del") {
+            $.ajax({
+              url: `/api/v1/department/${obj.data.id}`,
+              type: "DELETE",
+              contentType: "application/json",
+              headers: {
+                "X-CSRF-TOKEN": getCookie("csrf_access_token"),
+              },
+              success: function (res) {
+                if (!res.code) {
+                  treeTable.reloadData("department-table");
+                }
+              },
+            });
+          }
+        });
+
+        form.on("submit(department-form-btn)", function (data) {
+          var field = data.field;
+
+          data.field.enable = data.field.enable === "on";
+          let method, url;
+          if (field.pid === "") {
+            field.pid = null;
+          }
+          if (field.id == 0) {
+            field.id = null;
+            method = "POST";
+            url = "/api/v1/department";
+          } else {
+            method = "PUT";
+            url = `/api/v1/department/${field.id}`;
+          }
+          $.ajax({
+            url: url,
+            type: method,
+            contentType: "application/json",
+            headers: {
+              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
+            },
+            data: JSON.stringify(field),
+            success: function (res) {
+              if (!res.code) {
+                layer.closeAll();
+                treeTable.reloadData("department-table");
+              }
+            },
+          });
+          return false;
+        });
+      });
+    </script>
+  </body>
+</html>

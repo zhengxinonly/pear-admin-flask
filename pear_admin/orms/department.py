@@ -8,17 +8,15 @@ class DepartmentORM(BaseORM):
     id = db.Column(db.Integer, primary_key=True, comment="部门ID")
     name = db.Column(db.String(50), comment="部门名称")
     leader = db.Column(db.String(50), comment="负责人")
-    phone = db.Column(db.String(20), comment="联系方式")
-    email = db.Column(db.String(50), comment="邮箱")
-    enable = db.Column(db.Boolean, comment="状态(1开启,0关闭)")
-    comment = db.Column(db.Text, comment="备注")
-    address = db.Column(db.String(255), comment="详细地址")
-    sort = db.Column(db.Integer, comment="排序")
+    enable = db.Column(db.Boolean, comment="状态(1开启,0关闭)", default=True)
 
     users = db.relationship("UserORM", backref="department")
 
-    pid = db.Column(db.Integer, db.ForeignKey("ums_department.id"))
-    parent = db.relationship("DepartmentORM", remote_side=[id], backref="child")  # 自关联
+    pid = db.Column(db.Integer, db.ForeignKey("ums_department.id"), default=1)
+    parent = db.relationship(
+        "DepartmentORM", back_populates="children", remote_side=[id]
+    )  # 自关联
+    children = db.relationship("DepartmentORM", back_populates="parent")
 
     def json(self):
         return {
@@ -26,8 +24,5 @@ class DepartmentORM(BaseORM):
             "pid": self.pid,
             "name": self.name,
             "leader": self.leader,
-            "email": self.email,
-            "phone": self.phone,
-            "sort": self.sort,
             "enable": self.enable,
         }
