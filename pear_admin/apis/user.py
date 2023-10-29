@@ -31,10 +31,10 @@ def create_user():
     if data["id"]:
         del data["id"]
     role = UserORM(**data)
-    create_at = data['create_at']
+    create_at = data["create_at"]
     if create_at:
-        role.create_at = datetime.strptime(create_at, '%Y-%m-%d %H:%M:%S')
-    role.password = '123456'
+        role.create_at = datetime.strptime(create_at, "%Y-%m-%d %H:%M:%S")
+    role.password = "123456"
     role.save()
     return {"code": 0, "message": "新增用户成功"}
 
@@ -46,8 +46,8 @@ def change_user(uid):
 
     user_obj = UserORM.query.get(uid)
     for key, value in data.items():
-        if key == 'create_at':
-            value = datetime.strptime(value, '%Y-%m-%d %H:%M:%S')
+        if key == "create_at":
+            value = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
         setattr(user_obj, key, value)
     user_obj.save()
     return {"code": 0, "message": "修改用户信息成功"}

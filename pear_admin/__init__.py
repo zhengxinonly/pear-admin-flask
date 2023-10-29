@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from configs import config
 from pear_admin.apis import register_apis
@@ -16,5 +16,17 @@ def create_app(config_name="dev"):
     register_apis(app)
 
     register_views(app)
+
+    @app.errorhandler(403)
+    def handle_404(e):
+        return render_template("error/403.html")
+
+    @app.errorhandler(404)
+    def handle_403(e):
+        return render_template("error/404.html")
+
+    @app.errorhandler(500)
+    def handle_500(e):
+        return render_template("error/500.html")
 
     return app

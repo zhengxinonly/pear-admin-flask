@@ -1,258 +1,264 @@
 <!doctype html>
 <html lang="zh-cn">
-<head>
-    <meta charset="utf-8"/>
+  <head>
+    <meta charset="utf-8" />
     <title>用户管理</title>
-    <meta name="renderer" content="webkit"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1"
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-</head>
-<body>
-<div style="padding: 16px">
-    <div class="layui-card">
+  </head>
+  <body>
+    <div style="padding: 16px">
+      <div class="layui-card">
         <div class="layui-card-body">
-            <table
-                    class="layui-hide"
-                    id="user-table"
-                    lay-filter="user-table"
-            ></table>
+          <table
+            class="layui-hide"
+            id="user-table"
+            lay-filter="user-table"
+          ></table>
         </div>
+      </div>
     </div>
-</div>
-<form
-        class="layui-form"
-        lay-filter="user-form"
-        id="user-form"
-        action=""
-        style="padding: 15px; display: none"
->
-    <div class="layui-form-item">
+    <form
+      class="layui-form"
+      lay-filter="user-form"
+      id="user-form"
+      action=""
+      style="padding: 15px; display: none"
+    >
+      <div class="layui-form-item">
         <label class="layui-form-label">ID</label>
         <div class="layui-input-block">
-            <input
-                    type="text"
-                    name="id"
-                    value="0"
-                    lay-verify="required"
-                    autocomplete="off"
-                    class="layui-input"
-                    disabled
-            />
+          <input
+            type="text"
+            name="id"
+            value="0"
+            lay-verify="required"
+            autocomplete="off"
+            class="layui-input"
+            disabled
+          />
         </div>
-    </div>
-    <div class="layui-form-item">
+      </div>
+      <div class="layui-form-item">
         <label class="layui-form-label">用户名</label>
         <div class="layui-input-block">
-            <input
-                    type="text"
-                    name="username"
-                    placeholder="请输入用户名"
-                    lay-verify="required"
-                    autocomplete="off"
-                    class="layui-input"
-            />
+          <input
+            type="text"
+            name="username"
+            placeholder="请输入用户名"
+            lay-verify="required"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-    </div>
-    <div class="layui-form-item">
+      </div>
+      <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-block">
-            <input
-                    type="text"
-                    name="nickname"
-                    placeholder="请输入用户标识"
-                    lay-verify="required"
-                    autocomplete="off"
-                    class="layui-input"
-            />
+          <input
+            type="text"
+            name="nickname"
+            placeholder="请输入用户标识"
+            lay-verify="required"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-    </div>
-    <div class="layui-form-item">
+      </div>
+      <div class="layui-form-item">
         <label class="layui-form-label">手机号</label>
         <div class="layui-input-block">
-            <input
-                    type="text"
-                    name="mobile"
-                    placeholder="请输入用户描述"
-                    autocomplete="off"
-                    class="layui-input"
-            />
+          <input
+            type="text"
+            name="mobile"
+            placeholder="请输入用户描述"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-    </div>
-    <div class="layui-form-item">
+      </div>
+      <div class="layui-form-item">
         <label class="layui-form-label">邮箱</label>
         <div class="layui-input-block">
-            <input
-                    type="text"
-                    name="email"
-                    placeholder="请输入用户权限列表"
-                    autocomplete="off"
-                    class="layui-input"
-            />
+          <input
+            type="text"
+            name="email"
+            placeholder="请输入用户权限列表"
+            autocomplete="off"
+            class="layui-input"
+          />
         </div>
-    </div>
-    <div class="layui-form-item">
+      </div>
+      <div class="layui-form-item">
         <label class="layui-form-label">创建时间</label>
         <div class="layui-input-block">
-            <input type="text" name="create_at" class="layui-input" id="form_create_at"
-                   placeholder="yyyy-MM-dd HH:mm:ss" autocomplete="off" lay-verify="required">
+          <input
+            type="text"
+            name="create_at"
+            class="layui-input"
+            id="form_create_at"
+            placeholder="yyyy-MM-dd HH:mm:ss"
+            autocomplete="off"
+            lay-verify="required"
+          />
         </div>
-    </div>
-    </div>
-    <div class="layui-form-item">
+      </div>
+      <div class="layui-form-item">
         <div class="layui-input-block">
-            <button
-                    type="submit"
-                    class="layui-btn"
-                    lay-submit
-                    lay-filter="user-form-btn"
-            >
-                立即提交
-            </button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+          <button
+            type="submit"
+            class="layui-btn"
+            lay-submit
+            lay-filter="user-form-btn"
+          >
+            立即提交
+          </button>
+          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
-    </div>
-</form>
-<script type="text/html" id="user-toolbar">
-    <div class="layui-btn-container">
+      </div>
+    </form>
+    <script type="text/html" id="user-toolbar">
+      <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="user-toolbar-add">
-            新增角色
+          新增角色
         </button>
-    </div>
-</script>
-<script type="text/html" id="user-tool">
-    <div class="layui-btn-container">
+      </div>
+    </script>
+    <script type="text/html" id="user-tool">
+      <div class="layui-btn-container">
         <button
-                class="layui-btn layui-btn-sm layui-bg-blue"
-                lay-event="user-tool-edit"
+          class="layui-btn layui-btn-sm layui-bg-blue"
+          lay-event="user-tool-edit"
         >
-            编辑
-        </button>
-        <button
-                class="layui-btn layui-btn-sm layui-bg-yellow"
-                lay-event="user-tool-detail"
-        >
-            授权
+          编辑
         </button>
         <button
-                class="layui-btn layui-btn-sm layui-bg-red"
-                lay-event="user-tool-del"
+          class="layui-btn layui-btn-sm layui-bg-yellow"
+          lay-event="user-tool-detail"
         >
-            删除
+          授权
         </button>
-    </div>
-</script>
-<script>
-    layui.use(function () {
+        <button
+          class="layui-btn layui-btn-sm layui-bg-red"
+          lay-event="user-tool-del"
+        >
+          删除
+        </button>
+      </div>
+    </script>
+    <script>
+      layui.use(function () {
         var table = layui.table;
         var $ = layui.$;
         var form = layui.form;
         var laydate = layui.laydate;
 
         table.render({
-            elem: "#user-table",
-            id: "user-table",
-            url: "/api/v1/user", // 此处为静态模拟数据，实际使用时需换成真实接口
-            height: "full-35", // 最大高度减去其他容器已占有的高度差
-            toolbar: "#user-toolbar",
-            page: true,
-            cols: [
-                [
-                    //标题栏
-                    {field: "id", title: "ID", width: 80, sort: true},
-                    {field: "username", title: "用户名", width: 120},
-                    {field: "nickname", title: "昵称", width: 120},
-                    {field: "mobile", title: "手机号", width: 160},
-                    {field: "email", title: "邮箱", width: 120},
-                    {field: "create_at", title: "创建时间", width: 180},
-                    {
-                        fixed: "right",
-                        title: "操作",
-                        width: 180,
-                        align: "center",
-                        toolbar: "#user-tool",
-                    },
-                ],
+          elem: "#user-table",
+          id: "user-table",
+          url: "/api/v1/user", // 此处为静态模拟数据，实际使用时需换成真实接口
+          height: "full-35", // 最大高度减去其他容器已占有的高度差
+          toolbar: "#user-toolbar",
+          page: true,
+          cols: [
+            [
+              //标题栏
+              { field: "id", title: "ID", width: 80, sort: true },
+              { field: "username", title: "用户名", width: 120 },
+              { field: "nickname", title: "昵称", width: 120 },
+              { field: "mobile", title: "手机号", width: 160 },
+              { field: "email", title: "邮箱", width: 120 },
+              { field: "create_at", title: "创建时间", width: 180 },
+              {
+                fixed: "right",
+                title: "操作",
+                width: 180,
+                align: "center",
+                toolbar: "#user-tool",
+              },
             ],
+          ],
         });
 
         table.on("toolbar(user-table)", function (obj) {
-            if (obj.event === "user-toolbar-add") {
-                layer.open({
-                    type: 1,
-                    shade: false,
-                    content: $("#user-form"),
-                    area: ["50%", "80%"],
-                });
-                form.render($("#user-form"));
-            }
+          if (obj.event === "user-toolbar-add") {
+            layer.open({
+              type: 1,
+              shade: false,
+              content: $("#user-form"),
+              area: ["50%", "80%"],
+            });
+            form.render($("#user-form"));
+          }
         });
 
         table.on("tool(user-table)", function (obj) {
-            if (obj.event === "user-tool-edit") {
-                form.val("user-form", obj.data);
-                layer.open({
-                    type: 1,
-                    shade: false,
-                    content: $("#user-form"),
-                    area: ["50%", "80%"],
-                });
-            } else if (obj.event === "user-tool-del") {
-                $.ajax({
-                    url: `/api/v1/user/${obj.data.id}`,
-                    type: "DELETE",
-                    contentType: "application/json",
-                    headers: {
-                        "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-                    },
-                    success: function (res) {
-                        if (!res.code) {
-                            table.reloadData("user-table");
-                        }
-                    },
-                });
-            } else if (obj.event === "user-tool-detail") {
-                console.log("角色授权");
-            }
+          if (obj.event === "user-tool-edit") {
+            form.val("user-form", obj.data);
+            layer.open({
+              type: 1,
+              shade: false,
+              content: $("#user-form"),
+              area: ["50%", "80%"],
+            });
+          } else if (obj.event === "user-tool-del") {
+            $.ajax({
+              url: `/api/v1/user/${obj.data.id}`,
+              type: "DELETE",
+              contentType: "application/json",
+              headers: {
+                "X-CSRF-TOKEN": getCookie("csrf_access_token"),
+              },
+              success: function (res) {
+                if (!res.code) {
+                  table.reloadData("user-table");
+                }
+              },
+            });
+          } else if (obj.event === "user-tool-detail") {
+            console.log("角色授权");
+          }
         });
 
         form.on("submit(user-form-btn)", function (data) {
-            var field = data.field;
-            let method, url;
-            if (field.id == 0) {
-                field.id = null;
-                method = "POST";
-                url = "/api/v1/user";
-            } else {
-                method = "PUT";
-                url = `/api/v1/user/${field.id}`;
-            }
-            $.ajax({
-                url: url,
-                type: method,
-                contentType: "application/json",
-                headers: {
-                    "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-                },
-                data: JSON.stringify(field),
-                success: function (res) {
-                    if (!res.code) {
-                        layer.closeAll();
-                        table.reloadData("user-table");
-                    }
-                },
-            });
-            return false;
+          var field = data.field;
+          let method, url;
+          if (field.id == 0) {
+            field.id = null;
+            method = "POST";
+            url = "/api/v1/user";
+          } else {
+            method = "PUT";
+            url = `/api/v1/user/${field.id}`;
+          }
+          $.ajax({
+            url: url,
+            type: method,
+            contentType: "application/json",
+            headers: {
+              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
+            },
+            data: JSON.stringify(field),
+            success: function (res) {
+              if (!res.code) {
+                layer.closeAll();
+                table.reloadData("user-table");
+              }
+            },
+          });
+          return false;
         });
 
         // form_create_at
         laydate.render({
-            elem: '#form_create_at',
-            type: 'datetime'
+          elem: "#form_create_at",
+          type: "datetime",
         });
-    });
-</script>
-</body>
+      });
+    </script>
+  </body>
 </html>

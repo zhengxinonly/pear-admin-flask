@@ -20,9 +20,6 @@ id,name,code,type,url,icon_sign,status,sort,open_type,pid
 118,修改用户,ums:user:update,auth,,,,0,,116
 119,查询用户,ums:user:read,auth,,,,0,,116
 120,查询用户,ums:user:read,auth,,,,0,,116
-121,数据图表,,menu,,layui-icon layui-icon-chart,,3,,0
-122,折线图,,path,/views/echarts/line,layui-icon layui-icon-face-smile,,0,,121
-123,柱状图,,path,/views/echarts/column,layui-iconlayui-icon-face-smile,,0,,121
 124,工作空间,,menu,,layui-icon layui-icon-console,,1,,0
 125,工作台,,path,/view/console/index.html,layui-icon layui-icon-console,,2,_component,124
 126,首页,,path,/view/analysis/index.html,layui-icon layui-icon-console,,1,_component,124
