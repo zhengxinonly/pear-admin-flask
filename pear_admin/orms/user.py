@@ -41,7 +41,7 @@ class UserORM(BaseORM):
             "nickname": self.nickname,
             "mobile": self.mobile,
             "email": self.email,
-            "create_at": self.create_at,
+            "create_at": self.create_at.strftime("%Y-%m-%d %H:%M:%S"),
         }
 
     @property

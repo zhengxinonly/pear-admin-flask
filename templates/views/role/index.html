@@ -155,7 +155,7 @@
               { field: "id", title: "ID", width: 80, sort: true },
               { field: "name", title: "用户名", width: 120 },
               { field: "code", title: "用户标识", width: 160 },
-              { field: "desc", title: "描述", minWidth: 80 },
+              { field: "desc", title: "描述", maxWidth: 120 },
               { field: "ids", title: "权限列表", width: 100 },
               {
                 fixed: "right",
@@ -176,7 +176,7 @@
               content: $("#role-form"),
               area: ["50%", "80%"],
             });
-            form.render($("#role"));
+            form.render($("#role-form"));
           }
         });
 

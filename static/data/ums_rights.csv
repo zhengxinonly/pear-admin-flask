@@ -15,11 +15,11 @@ id,name,code,type,url,icon_sign,status,sort,open_type,pid
 113,修改部门,ums:department:update,auth,,,,0,,111
 114,删除部门,ums:department:delete,auth,,,,0,,111
 115,查询部门,ums:department:read,auth,,,,0,,111
-116,员工管理,ums:user,path,/views/user,layui-icon layui-icon-console,,4,,100
-117,新增员工,ums:user:create,auth,,,,0,,116
-118,修改员工,ums:user:update,auth,,,,0,,116
-119,查询员工,ums:user:read,auth,,,,0,,116
-120,查询员工,ums:user:read,auth,,,,0,,116
+116,用户管理,ums:user,path,/views/user,layui-icon layui-icon-console,,4,,100
+117,新增用户,ums:user:create,auth,,,,0,,116
+118,修改用户,ums:user:update,auth,,,,0,,116
+119,查询用户,ums:user:read,auth,,,,0,,116
+120,查询用户,ums:user:read,auth,,,,0,,116
 121,数据图表,,menu,,layui-icon layui-icon-chart,,3,,0
 122,折线图,,path,/views/echarts/line,layui-icon layui-icon-face-smile,,0,,121
 123,柱状图,,path,/views/echarts/column,layui-iconlayui-icon-face-smile,,0,,121

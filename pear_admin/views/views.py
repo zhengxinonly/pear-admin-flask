@@ -16,3 +16,8 @@ def role_view():
 @views_bp.get("/department")
 def department_view():
     return render_template("views/department/index.html")
+
+
+@views_bp.get("/user")
+def user_view():
+    return render_template("views/user/index.html")
