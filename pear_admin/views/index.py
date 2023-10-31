@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, send_from_directory
 from flask_jwt_extended import jwt_required
 
 index_bp = Blueprint("index", __name__)
@@ -29,3 +29,13 @@ def console1():
 @index_bp.route("/view/analysis/index.html")
 def analysis():
     return render_template("view/analysis/index.html")
+
+
+@index_bp.route("/view/system/person.html")
+def person():
+    return render_template("view/system/person.html")
+
+
+@index_bp.route("/favicon.ico")
+def fav_icon():
+    return send_from_directory(directory="static", path="favicon.ico")

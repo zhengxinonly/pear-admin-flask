@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'includes/script.html' %}
+</head>
+<body>
+<div class="layui-panel">
+    <form class="layui-form" action="">
+        <div class="row" style="margin: 10px 5px">
+            <ul id="role_rights" class="dtree" data-id="0"></ul>
+        </div>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="layui-btn layui-btn-primary layui-btn-sm" lay-submit=""
+                        lay-filter="role-rights-save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="layui-btn layui-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+
+    layui.use(function () {
+        let tree = layui.tree;
+        let form = layui.form;
+        let $ = layui.jquery;
+
+        function get_id(list_tree_data) {
+            if (Array.isArray(list_tree_data)) {
+                let ret = []
+                $.each(list_tree_data, function (index, item) {
+                    if (item?.children) {
+                        ret.push(...get_id(item.children))
+                    }
+                    ret.push(...get_id(item))
+                })
+                return ret
+            } else {
+                return [list_tree_data.id]
+            }
+        }
+
+        $.ajax({
+            url: '/api/v1/role/role_rights/{{ rid }}?type=tree',
+            type: 'get',
+            success: function (ret) {
+                tree.render({
+                    elem: '#role_rights',
+                    id: 'role_rights',
+                    data: ret.data,
+                    showCheckbox: true,
+                });
+            }
+        })
+
+        form.on('submit(role-rights-save)', function (data) {
+            let param = tree.getChecked('role_rights'); // 获取选中节点的数据
+            let rights_ids = get_id(param).join();
+            $.ajax({
+                url: '/api/v1/role/role_rights/{{ rid }}',
+                data: JSON.stringify({rights_ids: rights_ids}),
+                dataType: 'json',
+                contentType: 'application/json',
+                type: 'put',
+                success: function (result) {
+                    if (result.code === 0) {
+                        layer.msg(result.message, {icon: 1, time: 1000}, function () {
+                            parent.layer.close(parent.layer.getFrameIndex(window.name));
+                        });
+                    } else {
+                        layer.msg(result.message, {icon: 2, time: 1000});
+                    }
+                },
+            });
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

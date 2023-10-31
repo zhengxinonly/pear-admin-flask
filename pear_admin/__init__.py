@@ -17,16 +17,16 @@ def create_app(config_name="dev"):
 
     register_views(app)
 
-    @app.errorhandler(403)
-    def handle_404(e):
-        return render_template("error/403.html")
-
-    @app.errorhandler(404)
-    def handle_403(e):
-        return render_template("error/404.html")
-
-    @app.errorhandler(500)
-    def handle_500(e):
-        return render_template("error/500.html")
+    # @app.errorhandler(403)
+    # def handle_404(e):
+    #     return render_template("error/403.html")
+    #
+    # @app.errorhandler(404)
+    # def handle_403(e):
+    #     return render_template("error/404.html")
+    #
+    # @app.errorhandler(500)
+    # def handle_500(e):
+    #     return render_template("error/500.html")
 
     return app
