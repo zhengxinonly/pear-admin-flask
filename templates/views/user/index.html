@@ -220,7 +220,14 @@
               },
             });
           } else if (obj.event === "user-tool-detail") {
-            console.log("角色授权");
+            // 用户授权
+            layer.open({
+              type: 2,
+              title: "授权",
+              shade: 0.1,
+              area: ["500px", "500px"],
+              content: "/views/user_role/" + obj.data["id"],
+            });
           }
         });
 

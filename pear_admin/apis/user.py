@@ -4,7 +4,7 @@ from flask import Blueprint, request
 from flask_sqlalchemy.pagination import Pagination
 
 from pear_admin.extensions import db
-from pear_admin.orms import UserORM
+from pear_admin.orms import RoleORM, UserORM
 
 user_api = Blueprint("user", __name__)
 
@@ -58,3 +58,34 @@ def del_user(rid):
     user_obj = UserORM.query.get(rid)
     user_obj.delete()
     return {"code": 0, "message": "删除用户成功"}
+
+
+@user_api.get("/user/user_role/<int:uid>")
+def get_user_role(uid):
+    user: UserORM = db.session.execute(
+        db.select(UserORM).where(UserORM.id == uid)
+    ).scalar()
+
+    wn_role_list = [r.id for r in user.role_list]
+
+    return {
+        "code": 0,
+        "message": "返回角色权限数据成功",
+        "data": wn_role_list,
+    }
+
+
+@user_api.put("/user/user_role/<int:rid>")
+def change_user_role(rid):
+    role_ids = request.json.get("rights_ids", "")
+    role_list = role_ids.split(",")
+
+    user: UserORM = db.session.execute(
+        db.select(UserORM).where(UserORM.id == rid)
+    ).scalar()
+    role_obj_list = db.session.execute(
+        db.select(RoleORM).where(RoleORM.id.in_(role_list))
+    ).all()
+    user.role_list = [r[0] for r in role_obj_list]
+    user.save()
+    return {"code": 0, "message": "授权成功"}

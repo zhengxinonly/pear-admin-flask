@@ -2,14 +2,14 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>角色管理</title>
+    <title>用户授权</title>
     {% include 'includes/script.html' %}
   </head>
   <body>
     <div class="layui-panel">
       <form class="layui-form" action="">
         <div class="row" style="margin: 10px 5px">
-          <ul id="role_rights" class="dtree" data-id="0"></ul>
+          <ul id="user_role" class="dtree" data-id="0"></ul>
         </div>
         <div class="bottom">
           <div class="button-container">
@@ -53,30 +53,34 @@
         }
 
         $.ajax({
-          url: "/api/v1/rights?type=tree",
+          url: "/api/v1/role?type=tree",
           type: "get",
           success: function (ret) {
+            let data = [];
+            $.each(ret.data, function (index, item) {
+              data.push({ id: item.id, title: item.name });
+            });
             tree.render({
-              elem: "#role_rights",
-              id: "role_rights",
-              data: ret.data,
+              elem: "#user_role",
+              id: "user_role",
+              data: data,
               showCheckbox: true,
             });
             $.ajax({
-              url: "/api/v1/role/role_rights/{{ rid }}?type=tree",
+              url: "/api/v1/user/user_role/{{ rid }}",
               type: "get",
               success: function (ret) {
-                tree.setChecked("role_rights", ret.data);
+                tree.setChecked("user_role", ret.data);
               },
             });
           },
         });
 
         form.on("submit(role-rights-save)", function (data) {
-          let param = tree.getChecked("role_rights"); // 获取选中节点的数据
+          let param = tree.getChecked("user_role"); // 获取选中节点的数据
           let rights_ids = get_id(param).join();
           $.ajax({
-            url: "/api/v1/role/role_rights/{{ rid }}",
+            url: "/api/v1/user/user_role/{{ rid }}",
             data: JSON.stringify({ rights_ids: rights_ids }),
             dataType: "json",
             contentType: "application/json",

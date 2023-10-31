@@ -18,6 +18,11 @@ def role_rights_view(rid):
     return render_template("views/role/role_rights.html", rid=rid)
 
 
+@views_bp.get("/views/user_role/<int:rid>")
+def user_role_view(rid):
+    return render_template("views/user/user_role.html", rid=rid)
+
+
 @views_bp.get("/views/department")
 def department_view():
     return render_template("views/department/index.html")
