@@ -5,6 +5,7 @@ from flask import Blueprint, make_response, redirect, request
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
+    get_current_user,
     jwt_required,
     set_access_cookies,
     set_refresh_cookies,
@@ -13,7 +14,7 @@ from flask_jwt_extended import (
 )
 
 from pear_admin.extensions import db
-from pear_admin.orms import RightsORM, UserORM
+from pear_admin.orms import RightsORM, RoleORM, UserORM
 
 passport_api = Blueprint("passport", __name__)
 
@@ -54,7 +55,13 @@ def logout():
 @passport_api.get("/menu")
 @jwt_required()
 def menus_api():
-    rights_orm_list = RightsORM.query.filter(RightsORM.type != "auth").all()
+    rights_orm_list = set()
+    current_user: UserORM = get_current_user()
+    for role in current_user.role_list:
+        for rights_orm in role.rights_list:
+            if rights_orm.type != "auth":
+                rights_orm_list.add(rights_orm)
+
     rights_list = [rights_orm.menu_json() for rights_orm in rights_orm_list]
     rights_list.sort(key=lambda x: (x["pid"], x["id"]), reverse=True)
 

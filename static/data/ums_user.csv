@@ -1,4 +1,4 @@
 id,nickname,username,password,mobile,email,avatar,department_id,role_ids
 1,admin,超级管理员,123456,15543526531,8540854@qq.com,,1,1
 2,就眠仪式,就眠仪式,123456,155324324234,8540854@qq.com,,1,2
-3,zhengxinonly,正心全栈编程,123456,18675867241,pyxxponly@gmail.com,,1,3
+3,zhengxinonly,正心全栈编程,123456,18675867241,pyxxponly@gmail.com,,1,1
