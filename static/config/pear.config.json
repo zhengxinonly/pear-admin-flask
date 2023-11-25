@@ -10,14 +10,14 @@
     "collapse": false,
     "control": false,
     "controlWidth": 500,
-    "select": "126",
+    "select": "10",
     "async": true
   },
   "tab": {
     "enable": true,
     "keepState": true,
     "session": true,
-    "preload": true,
+    "preload": false,
     "max": "30",
     "index": {
       "id": "126",
@@ -26,12 +26,11 @@
     }
   },
   "theme": {
-    "defaultColor": "2",
+    "defaultColor": "1",
     "defaultMenu": "dark-theme",
     "defaultHeader": "light-theme",
     "allowCustom": true,
-    "banner": false,
-    "dark": true
+    "banner": false
   },
   "colors": [
     {
@@ -41,26 +40,21 @@
     },
     {
       "id": "2",
-      "color": "#009688",
-      "second": "#ecf5ff"
-    },
-    {
-      "id": "3",
       "color": "#36b368",
       "second": "#f0f9eb"
     },
     {
-      "id": "4",
+      "id": "3",
       "color": "#f6ad55",
       "second": "#fdf6ec"
     },
     {
-      "id": "5",
+      "id": "4",
       "color": "#f56c6c",
       "second": "#fef0f0"
     },
     {
-      "id": "6",
+      "id": "5",
       "color": "#3963bc",
       "second": "#ecf5ff"
     }

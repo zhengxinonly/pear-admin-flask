@@ -94,8 +94,8 @@ hr {
   line-height: 0;
   margin: 10px 0;
   padding: 0;
-  border: none !important;
-  border-bottom: 1px solid #eee !important;
+  border: none;
+  border-bottom: 1px solid #eee;
   clear: both;
   overflow: hidden;
   background: 0 0;
@@ -1926,6 +1926,15 @@ a cite {
   border-color: #2f363c !important;
   color: #2f363c !important;
 }
+hr.layui-border-black,
+hr.layui-border-blue,
+hr.layui-border-cyan,
+hr.layui-border-green,
+hr.layui-border-orange,
+hr.layui-border-purple,
+hr.layui-border-red {
+  border-width: 0 0 1px;
+}
 .layui-timeline-item:before {
   background-color: #eee;
 }
@@ -2412,6 +2421,9 @@ a cite {
 }
 .layui-input-wrap .layui-input:focus + .layui-input-split {
   border-color: #16b777;
+}
+.layui-input-wrap .layui-input.layui-form-danger:focus + .layui-input-split {
+  border-color: #ff5722;
 }
 .layui-input-wrap .layui-input-prefix.layui-input-split {
   border-width: 0;
@@ -3803,7 +3815,7 @@ body .layui-table-tips .layui-layer-content {
 }
 .layui-menu li {
   position: relative;
-  margin: 1px 0;
+  margin: 0 0 1px;
   line-height: 26px;
   color: rgba(0, 0, 0, 0.8);
   font-size: 14px;
@@ -3871,6 +3883,12 @@ body .layui-table-tips .layui-layer-content {
   height: 0;
   overflow: hidden;
 }
+.layui-menu .layui-menu-item-down > .layui-menu-body-title > .layui-icon-down {
+  transform: rotate(180deg);
+}
+.layui-menu .layui-menu-item-up > .layui-menu-body-title > .layui-icon-up {
+  transform: rotate(-180deg);
+}
 .layui-menu .layui-menu-item-down:hover > .layui-menu-body-title > .layui-icon,
 .layui-menu .layui-menu-item-up > .layui-menu-body-title:hover > .layui-icon {
   color: #000;
@@ -3917,6 +3935,8 @@ body .layui-table-tips .layui-layer-content {
   margin-top: -6px;
   line-height: normal;
   font-size: 14px;
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
 }
 .layui-menu-body-title > .layui-icon:hover {
   transition: all 0.3s;
@@ -4170,6 +4190,7 @@ body .layui-table-tips .layui-layer-content {
   z-index: 0;
   top: 0;
   border: none;
+  background-color: rgba(0, 0, 0, 0.3);
   box-shadow: none;
 }
 .layui-nav-tree .layui-nav-child dd {
@@ -4179,15 +4200,11 @@ body .layui-table-tips .layui-layer-content {
   color: #fff;
   color: rgba(255, 255, 255, 0.7);
 }
-.layui-nav-tree .layui-nav-child,
 .layui-nav-tree .layui-nav-child a:hover {
   background: 0 0;
   color: #fff;
 }
-.layui-nav-itemed > .layui-nav-child {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.3) !important;
-}
+.layui-nav-itemed > .layui-nav-child,
 .layui-nav-itemed > .layui-nav-child > .layui-this > .layui-nav-child {
   display: block;
 }
@@ -4204,25 +4221,15 @@ body .layui-table-tips .layui-layer-content {
   color: #373737;
   color: rgba(0, 0, 0, 0.8);
 }
-.layui-nav-tree.layui-bg-gray {
-  padding: 6px 0;
-}
 .layui-nav-tree.layui-bg-gray .layui-nav-itemed > a {
   color: #000 !important;
 }
 .layui-nav.layui-bg-gray .layui-this a {
   color: #16b777;
 }
-.layui-nav-tree.layui-bg-gray .layui-nav-itemed > .layui-nav-child {
+.layui-nav-tree.layui-bg-gray .layui-nav-child {
   padding-left: 11px;
-  background: 0 0 !important;
-}
-.layui-nav-tree.layui-bg-gray .layui-nav-item > a {
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.layui-nav-tree.layui-bg-gray .layui-nav-item > a .layui-nav-more {
-  padding: 0;
+  background: 0 0;
 }
 .layui-nav-tree.layui-bg-gray .layui-nav-child dd.layui-this,
 .layui-nav-tree.layui-bg-gray .layui-nav-child dd.layui-this a,
@@ -5838,10 +5845,13 @@ html #layuicss-skincodecss {
 .layui-code-view:hover > .layui-code-fixbar .layui-code-lang-marker {
   display: none;
 }
-.layui-code-theme-dark {
-  border-width: 1px;
+.layui-code-theme-dark,
+.layui-code-theme-dark > .layui-code-header {
   border-color: rgb(126 122 122 / 15%);
   background-color: #1f1f1f;
+}
+.layui-code-theme-dark {
+  border-width: 1px;
   color: #ccc;
 }
 .layui-code-theme-dark > .layui-code-ln-side {
@@ -5870,7 +5880,6 @@ html #layuicss-skincodecss {
 .layui-code-item-preview {
   position: relative;
   padding: 16px;
-  overflow: auto;
 }
 .layui-code-item-preview > iframe {
   position: absolute;
@@ -5917,6 +5926,9 @@ html #layuicss-skincodecss {
 .layui-code-full .layui-code-wrap {
   height: calc(100vh - 51px) !important;
   box-sizing: border-box;
+}
+.layui-code-full .layui-code-item-preview {
+  overflow: auto;
 }
 .layui-code-view.layui-code-hl {
   line-height: 20px !important;

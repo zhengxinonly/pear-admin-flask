@@ -146,6 +146,11 @@
   background-color: #0a0a0a;
 }
 
+.pear-admin-dark .layui-body .layui-tab .layui-tab-close:hover {
+  border-radius: 50%;
+  background-color: #0a0a0a !important;
+}
+
 .pear-admin-dark .pear-tab-page-menu ul li {
   color: #ffffff !important;
 }

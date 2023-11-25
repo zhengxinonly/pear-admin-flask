@@ -6,187 +6,160 @@
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <title>注册</title>
-    {% include 'includes/script.html' %}
-    <link rel="stylesheet" href="/static/admin/css/other/register.css" />
+    <title>登录</title>
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <link rel="stylesheet" href="/static/admin/css/other/login.css" />
+    <link rel="stylesheet" href="/static/admin/css/variables.css" />
   </head>
 
-  <body background="/static/admin/images/background.svg">
-    <form class="layui-form">
-      <div class="demo-reg-container">
-        <div class="layui-form-item">
-          <div class="layui-row">
-            <div class="layui-col-xs7">
-              <div class="layui-input-wrap">
-                <div class="layui-input-prefix">
-                  <i class="layui-icon layui-icon-cellphone"></i>
-                </div>
-                <input
-                  type="text"
-                  name="cellphone"
-                  value=""
-                  lay-verify="required|phone"
-                  placeholder="手机号"
-                  lay-reqtext="请填写手机号"
-                  autocomplete="off"
-                  class="layui-input"
-                  id="reg-cellphone"
-                />
-              </div>
-            </div>
-            <div class="layui-col-xs5">
-              <div style="margin-left: 11px">
-                <button
-                  type="button"
-                  class="layui-btn layui-btn-fluid layui-btn-primary"
-                  lay-on="reg-get-vercode"
-                >
-                  获取验证码
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <div class="layui-input-wrap">
-            <div class="layui-input-prefix">
-              <i class="layui-icon layui-icon-vercode"></i>
-            </div>
-            <input
-              type="text"
-              name="vercode"
-              value=""
-              lay-verify="required"
-              placeholder="验证码"
-              lay-reqtext="请填写验证码"
-              autocomplete="off"
-              class="layui-input"
-            />
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <div class="layui-input-wrap">
-            <div class="layui-input-prefix">
-              <i class="layui-icon layui-icon-password"></i>
-            </div>
-            <input
-              type="password"
-              name="password"
-              value=""
-              lay-verify="required"
-              placeholder="密码"
-              autocomplete="off"
-              class="layui-input"
-              id="reg-password"
-              lay-affix="eye"
-            />
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <div class="layui-input-wrap">
-            <div class="layui-input-prefix">
-              <i class="layui-icon layui-icon-password"></i>
-            </div>
-            <input
-              type="password"
-              name="confirmPassword"
-              value=""
-              lay-verify="required|confirmPassword"
-              placeholder="确认密码"
-              autocomplete="off"
-              class="layui-input"
-              lay-affix="eye"
-            />
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <div class="layui-input-wrap">
-            <div class="layui-input-prefix">
-              <i class="layui-icon layui-icon-username"></i>
-            </div>
-            <input
-              type="text"
-              name="nickname"
-              value=""
-              lay-verify="required"
-              placeholder="昵称"
-              autocomplete="off"
-              class="layui-input"
-              lay-affix="clear"
-            />
-          </div>
-        </div>
-        <div class="layui-form-item">
-          <input
-            type="checkbox"
-            name="agreement"
-            lay-verify="required"
-            lay-skin="primary"
-            title="同意"
+  <body>
+    <div class="login-page">
+      <div class="layui-row">
+        <div class="layui-col-sm6 login-bg">
+          <img
+            class="login-bg-img"
+            src="/static/admin/images/banner.png"
+            alt=""
           />
-          <a
-            href="#terms"
-            target="_blank"
-            style="position: relative; top: 6px; left: -15px"
-          >
-            <ins>用户协议</ins>
-          </a>
         </div>
-        <div class="layui-form-item">
-          <button
-            class="layui-btn layui-btn-fluid"
-            lay-submit
-            lay-filter="demo-reg"
-          >
-            注册
-          </button>
-        </div>
-        <div class="layui-form-item demo-reg-other">
-          <label>社交账号注册</label>
-          <span style="padding: 0 21px 0 6px">
-            <a href="javascript:;"
-              ><i
-                class="layui-icon layui-icon-login-qq"
-                style="color: #3492ed"
-              ></i
-            ></a>
-            <a href="javascript:;"
-              ><i
-                class="layui-icon layui-icon-login-wechat"
-                style="color: #4daf29"
-              ></i
-            ></a>
-            <a href="javascript:;"
-              ><i
-                class="layui-icon layui-icon-login-weibo"
-                style="color: #cf1900"
-              ></i
-            ></a>
-          </span>
-          <a href="#login">登录已有帐号</a>
+        <div class="layui-col-sm6 login-form">
+          <div class="layui-form">
+            <div class="form-center">
+              <div class="form-center-box">
+                <div class="top-log-title">
+                  <img
+                    class="top-log"
+                    src="http://www.layui-vue.com/assets/logo.685dda16.jpg"
+                    alt=""
+                  />
+                  <span>Pear Admin Flask</span>
+                </div>
+                <div class="top-desc">
+                  以 超 乎 想 象 的 速 度 构 建 内 部 工 具
+                  <br />
+                  <br />
+                  （注册账号）
+                </div>
+                <div style="margin-top: 30px">
+                  <div class="layui-form-item">
+                    <div class="layui-input-wrap">
+                      <div class="layui-input-prefix">
+                        <i class="layui-icon layui-icon-username"></i>
+                      </div>
+                      <input
+                        lay-verify="required"
+                        placeholder="账户"
+                        autocomplete="off"
+                        name="username"
+                        value=""
+                        class="layui-input"
+                      />
+                    </div>
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="layui-input-wrap">
+                      <div class="layui-input-prefix">
+                        <i class="layui-icon layui-icon-password"></i>
+                      </div>
+                      <input
+                        type="password"
+                        name="password"
+                        value=""
+                        lay-verify="required|confirmPassword"
+                        placeholder="密码"
+                        autocomplete="off"
+                        class="layui-input"
+                        lay-affix="eye"
+                      />
+                    </div>
+                  </div>
+                  <div class="tab-log-verification">
+                    <div class="verification-text">
+                      <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                          <i class="layui-icon layui-icon-auz"></i>
+                        </div>
+                        <input
+                          lay-verify="required"
+                          placeholder="验证码"
+                          autocomplete="off"
+                          class="layui-input"
+                        />
+                      </div>
+                    </div>
+                    <img
+                      src="/static/admin/images/captcha.gif"
+                      alt=""
+                      class="verification-img"
+                    />
+                  </div>
+                  <div class="layui-form-item">
+                    <div class="remember-passsword">
+                      <div class="remember-cehcked">
+                        <input
+                          type="checkbox"
+                          name="login-in"
+                          lay-skin="primary"
+                          title="注册成功后自动登录"
+                          checked
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="login-btn">
+                    <button
+                      type="button"
+                      lay-submit
+                      lay-filter="login-in"
+                      class="layui-btn login"
+                    >
+                      登 录
+                    </button>
+                  </div>
+                  <div class="other-login">
+                    <div class="other-login-methods">其他方式</div>
+                    <a class="greenText" href="/login.html">登录</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </form>
-
+    </div>
+    <!-- 资 源 引 入 -->
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
     <script>
-      layui.use(["form", "button", "popup"], function () {
+      layui.use(["form", "button", "popup", "jquery"], function () {
         var form = layui.form;
         var button = layui.button;
         var popup = layui.popup;
+        var $ = layui.jquery;
 
         // 登 录 提 交
-        form.on("submit(login)", function (data) {
+        form.on("submit(login-in)", function (data) {
           /// 验证
 
-          /// 登录
-
           /// 动画
-          button.load({
-            elem: ".login",
-            time: 1500,
-            done: function () {
-              popup.success("登录成功", function () {
-                location.href = "index.html";
+          let btn = button.load({ elem: ".login" });
+
+          /// 登录
+          $.ajax({
+            url: "/api/v1/login",
+            type: "POST",
+            data: JSON.stringify(data.field),
+            contentType: "application/json",
+            success: function (res) {
+              btn.stop(function () {
+                popup.success("登录成功", function () {
+                  location.href = "/";
+                });
+              });
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+              btn.stop(function () {
+                popup.failure(XMLHttpRequest.responseJSON.message);
               });
             },
           });

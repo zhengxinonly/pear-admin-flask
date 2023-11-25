@@ -78,7 +78,7 @@ layui.define(["jquery", "element", "dropdown"], function (exports) {
     );
 
     dropdown.render({
-      elem: `#${option.elem} .layui-icon-down`,
+      elem: `#${option.elem} .layui-tab-control > .layui-icon-down`,
       trigger: "hover",
       data: [
         {
@@ -580,7 +580,6 @@ layui.define(["jquery", "element", "dropdown"], function (exports) {
    */
   function createTab(option) {
     var type = "";
-    var types = option.type + " ";
     if (option.roll == true) {
       type = "layui-tab-roll";
     }
@@ -592,7 +591,6 @@ layui.define(["jquery", "element", "dropdown"], function (exports) {
     }
     var tab =
       '<div class="pear-tab-page ' +
-      types +
       type +
       ' layui-tab" lay-filter="' +
       option.elem +

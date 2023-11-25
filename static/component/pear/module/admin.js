@@ -130,6 +130,8 @@ layui.define(
 
       /**
        * @since Pear Admin 4.0
+       *
+       * 菜单搜索
        */
       this.menuSearchRender = function (options) {
         menuSearch.render({
@@ -171,6 +173,11 @@ layui.define(
         });
       };
 
+      /**
+       * @since Pear Admin 4.0
+       *
+       * 消息中心
+       */
       this.messageCenterRender = function (options) {
         messageCenter.render({
           elem: ".message",
@@ -184,6 +191,11 @@ layui.define(
         $(".layui-logo .title").html(param.logo.title);
       };
 
+      /**
+       * @since Pear Admin 4.0
+       *
+       * 侧边菜单
+       */
       this.menuRender = function (param) {
         sideMenu = menu.render({
           elem: "sideMenu",
@@ -210,6 +222,11 @@ layui.define(
         });
       };
 
+      /**
+       * @since Pear Admin 4.0
+       *
+       * 视图容器
+       */
       this.bodyRender = function (param) {
         body.on("click", ".refresh", function () {
           refresh();
@@ -312,6 +329,11 @@ layui.define(
         document.documentElement.style.setProperty(variableKey, variableVal);
       };
 
+      /**
+       * @since Pear Admin 4.0
+       *
+       * 主题配置
+       */
       this.themeRender = function (option) {
         if (option.theme.allowCustom === false) {
           $(".setting").remove();
@@ -415,10 +437,10 @@ layui.define(
         var footerDOM = $(".pear-admin .layui-footer");
         if (footer === true || footer === "true") {
           footerDOM.removeClass("close");
-          bodyDOM.css("bottom", footerDOM.outerHeight());
+          bodyDOM.css("height", "calc(100% - 105px)");
         } else {
           footerDOM.addClass("close");
-          bodyDOM.css("bottom", "");
+          bodyDOM.css("height", "calc(100% - 60px)");
         }
       };
 
@@ -466,6 +488,11 @@ layui.define(
       };
     })();
 
+    /**
+     * @since Pear Admin 4.0
+     *
+     * 页面刷新
+     */
     function refresh() {
       var refreshA = $(".refresh a");
       refreshA.removeClass("layui-icon-refresh-1");
@@ -488,6 +515,11 @@ layui.define(
       }, 600);
     }
 
+    /**
+     * @since Pear Admin 4.0
+     *
+     * 菜单折叠
+     */
     function collapse() {
       sideMenu.collapse();
       var admin = $(".pear-admin");

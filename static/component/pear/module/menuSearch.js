@@ -121,16 +121,17 @@ layui.define(["jquery", "tools"], function (exports) {
             });
 
           // 监听键盘事件
-          $(document)
+          $(".menu-search-content")
             .off("keydown")
             .keydown(function (e) {
               if (e.keyCode === 13 || e.keyCode === 32) {
                 e.preventDefault();
-                var id = $(this).attr("smenu-id");
-                var title = $(this).attr("smenu-title");
-                var url = $(this).attr("smenu-url");
-                var type = $(this).attr("smenu-type");
-                var openType = $(this).attr("smenu-open-type");
+                var that = $(".menu-search-list li.this");
+                var id = that.attr("smenu-id");
+                var title = that.attr("smenu-title");
+                var url = that.attr("smenu-url");
+                var type = that.attr("smenu-type");
+                var openType = that.attr("smenu-open-type");
 
                 options.select({ id, title, url, type, openType });
 
