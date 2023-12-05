@@ -92,6 +92,33 @@
         </div>
       </div>
       <div class="layui-form-item">
+        <label class="layui-form-label">权限类型</label>
+        <div class="layui-input-block">
+          <input
+            type="radio"
+            name="type"
+            value="menu"
+            title="菜单"
+            lay-filter="form-rights-filter"
+            checked
+          />
+          <input
+            type="radio"
+            name="type"
+            value="path"
+            title="路由"
+            lay-filter="form-rights-filter"
+          />
+          <input
+            type="radio"
+            name="type"
+            value="auth"
+            title="权限"
+            lay-filter="form-rights-filter"
+          />
+        </div>
+      </div>
+      <div class="layui-form-item">
         <label class="layui-form-label">图标</label>
         <div class="layui-input-inline">
           <input
@@ -102,22 +129,14 @@
           />
         </div>
       </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">权限类型</label>
-        <div class="layui-input-block">
-          <input type="radio" name="type" value="menu" title="菜单" checked />
-          <input type="radio" name="type" value="path" title="路由" />
-          <input type="radio" name="type" value="auth" title="权限" />
-        </div>
-      </div>
-      <div class="layui-form-item">
+      <div class="layui-form-item" style="display: none">
         <label class="layui-form-label">访问地址</label>
         <div class="layui-input-block">
           <input
             type="text"
             name="url"
             lay-verify=""
-            placeholder="权限类路由时输入访问地址，其他情况下不需要输入"
+            placeholder="请输入访问地址"
             autocomplete="off"
             class="layui-input"
           />
@@ -152,13 +171,10 @@
       <div class="layui-form-item">
         <label class="layui-form-label">打开方式</label>
         <div class="layui-input-inline">
-          <input
-            type="text"
-            name="open_type"
-            placeholder=""
-            autocomplete="off"
-            class="layui-input"
-          />
+          <select name="open_type" id="">
+            <option value="_component" selected>默认方式</option>
+            <option value="_blank">新窗口</option>
+          </select>
         </div>
       </div>
       <div class="layui-form-item">
@@ -193,6 +209,7 @@
         var $ = layui.$;
         var form = layui.form;
         var layer = layui.layer;
+
         treeTable.render({
           elem: "#rights-table",
           id: "rights-table",
@@ -281,6 +298,19 @@
             field.id = null;
             method = "POST";
             url = "/api/v1/rights";
+
+            if (field.type === "path") {
+              if (!/\//.test(field.url)) {
+                layer.msg("url 不符合格式");
+                return false;
+              }
+            } else if (field.type === "auth") {
+              console.log(field.pid);
+              if (!field.pid || field.pid === "0") {
+                layer.msg("权限必须填入父级 id");
+                return false;
+              }
+            }
           } else {
             method = "PUT";
             url = `/api/v1/rights/${field.id}`;
@@ -329,6 +359,30 @@
               },
             });
           }
+        });
+
+        form.on("radio(form-rights-filter)", function (data) {
+          var elem = data.elem; // 获得 radio 原始 DOM 对象
+          var checked = elem.checked; // 获得 radio 选中状态
+          var value = elem.value; // 获得 radio 值
+          var othis = data.othis; // 获得 radio 元素被替换后的 jQuery 对象
+
+          switch (value) {
+            case "menu":
+              $('[name="icon_sign"]').parent().parent().show();
+              $('[name="url"]').parent().parent().hide();
+              break;
+            case "path":
+              $('[name="icon_sign"]').parent().parent().hide();
+              $('[name="url"]').parent().parent().show();
+              break;
+            case "auth":
+              $('[name="url"]').parent().parent().hide();
+              $('[name="icon_sign"]').parent().parent().hide();
+              break;
+          }
+
+          layer.msg(["value: " + value, "checked: " + checked].join("<br>"));
         });
       });
     </script>
