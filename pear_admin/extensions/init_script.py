@@ -9,7 +9,10 @@ from pear_admin.orms import DepartmentORM, RightsORM, RoleORM, UserORM
 
 def dict_to_orm(d, o):
     for k, v in d.items():
-        setattr(o, k, v or None)
+        if k == "password":
+            o.password = v
+        else:
+            setattr(o, k, v or None)
 
 
 def csv_to_databases(path, orm):

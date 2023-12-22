@@ -29,7 +29,7 @@ def login_in():
 
     if not user:
         return {"message": "用户不存在", "code": -1}, 401
-    if user.check_password(data["password"]):
+    if not user.check_password(data["password"]):
         return {"message": "用户密码错误", "code": -1}, 401
 
     access_token = create_access_token(user)
