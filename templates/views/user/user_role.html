@@ -3,7 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <title>用户授权</title>
-    {% include 'includes/script.html' %}
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+    <link rel="stylesheet" href="/static/admin/css/admin.css" />
+    <link rel="stylesheet" href="/static/admin/css/admin.dark.css" />
+    <link rel="stylesheet" href="/static/admin/css/variables.css" />
+    <link rel="stylesheet" href="/static/admin/css/reset.css" />
+    <!-- 依 赖 脚 本 -->
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+    <script src="/static/js/pear_admin_flask.js"></script>
   </head>
   <body>
     <div class="layui-panel">
@@ -37,21 +45,6 @@
         let form = layui.form;
         let $ = layui.jquery;
 
-        function get_id(list_tree_data) {
-          if (Array.isArray(list_tree_data)) {
-            let ret = [];
-            $.each(list_tree_data, function (index, item) {
-              if (item?.children) {
-                ret.push(...get_id(item.children));
-              }
-              ret.push(...get_id(item));
-            });
-            return ret;
-          } else {
-            return [list_tree_data.id];
-          }
-        }
-
         $.ajax({
           url: "/api/v1/role?type=tree",
           type: "get",
@@ -66,6 +59,7 @@
               data: data,
               showCheckbox: true,
             });
+            // 请求获取当前用户的权限
             $.ajax({
               url: "/api/v1/user/user_role/{{ rid }}",
               type: "get",
@@ -75,6 +69,21 @@
             });
           },
         });
+
+        function get_id(list_tree_data) {
+          if (Array.isArray(list_tree_data)) {
+            let ret = [];
+            $.each(list_tree_data, function (index, item) {
+              if (item?.children) {
+                ret.push(...get_id(item.children));
+              }
+              ret.push(...get_id(item));
+            });
+            return ret;
+          } else {
+            return [list_tree_data.id];
+          }
+        }
 
         form.on("submit(role-rights-save)", function (data) {
           let param = tree.getChecked("user_role"); // 获取选中节点的数据

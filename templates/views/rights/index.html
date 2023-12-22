@@ -362,10 +362,8 @@
         });
 
         form.on("radio(form-rights-filter)", function (data) {
-          var elem = data.elem; // 获得 radio 原始 DOM 对象
-          var checked = elem.checked; // 获得 radio 选中状态
-          var value = elem.value; // 获得 radio 值
-          var othis = data.othis; // 获得 radio 元素被替换后的 jQuery 对象
+          var elem = data.elem;
+          var value = elem.value;
 
           switch (value) {
             case "menu":
@@ -381,8 +379,6 @@
               $('[name="icon_sign"]').parent().parent().hide();
               break;
           }
-
-          layer.msg(["value: " + value, "checked: " + checked].join("<br>"));
         });
       });
     </script>
