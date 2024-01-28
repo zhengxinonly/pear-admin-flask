@@ -1,24 +1,21 @@
-from flask import Blueprint, render_template, send_from_directory
-from flask_jwt_extended import jwt_required
+from flask import Blueprint, render_template, send_file, send_from_directory
 
 index_bp = Blueprint("index", __name__)
 
 
 @index_bp.route("/")
-@jwt_required()
 def index():
-    return render_template("index.html")
+    return render_template("view/index.html")
 
 
-@index_bp.route("/login.html")
-@index_bp.route("/login")
+@index_bp.route("/view/login.html")
 def login():
-    return render_template("login.html")
+    return render_template("view/login.html")
 
 
-@index_bp.route("/register.html")
+@index_bp.route("/view/register.html")
 def register():
-    return render_template("register.html")
+    return render_template("view/register.html")
 
 
 @index_bp.route("/view/console/index.html")

@@ -36,6 +36,9 @@
                 </div>
                 <div class="top-desc">
                   以 超 乎 想 象 的 速 度 构 建 内 部 工 具
+                  <br />
+                  <br />
+                  （注册账号）
                 </div>
                 <div style="margin-top: 30px">
                   <div class="layui-form-item">
@@ -48,7 +51,7 @@
                         placeholder="账户"
                         autocomplete="off"
                         name="username"
-                        value="正心全栈编程"
+                        value=""
                         class="layui-input"
                       />
                     </div>
@@ -61,7 +64,7 @@
                       <input
                         type="password"
                         name="password"
-                        value="123456"
+                        value=""
                         lay-verify="required|confirmPassword"
                         placeholder="密码"
                         autocomplete="off"
@@ -70,14 +73,35 @@
                       />
                     </div>
                   </div>
+                  <div class="tab-log-verification">
+                    <div class="verification-text">
+                      <div class="layui-input-wrap">
+                        <div class="layui-input-prefix">
+                          <i class="layui-icon layui-icon-auz"></i>
+                        </div>
+                        <input
+                          lay-verify="required"
+                          placeholder="验证码"
+                          autocomplete="off"
+                          class="layui-input"
+                        />
+                      </div>
+                    </div>
+                    <img
+                      src="/static/admin/images/captcha.gif"
+                      alt=""
+                      class="verification-img"
+                    />
+                  </div>
                   <div class="layui-form-item">
                     <div class="remember-passsword">
                       <div class="remember-cehcked">
                         <input
                           type="checkbox"
-                          name="like1[write]"
+                          name="login-in"
                           lay-skin="primary"
-                          title="自动登录"
+                          title="注册成功后自动登录"
+                          checked
                         />
                       </div>
                     </div>
@@ -94,7 +118,7 @@
                   </div>
                   <div class="other-login">
                     <div class="other-login-methods">其他方式</div>
-                    <a class="greenText" href="/register.html">注册账号</a>
+                    <a class="greenText" href="/view/login.html">登录</a>
                   </div>
                 </div>
               </div>

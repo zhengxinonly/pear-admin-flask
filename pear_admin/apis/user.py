@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from flask import Blueprint, request
+from flask_jwt_extended import current_user, jwt_required
 from flask_sqlalchemy.pagination import Pagination
 
 from pear_admin.extensions import db
@@ -89,3 +90,13 @@ def change_user_role(rid):
     user.role_list = [r[0] for r in role_obj_list]
     user.save()
     return {"code": 0, "message": "授权成功"}
+
+
+@user_api.get("/user/profile")
+@jwt_required()
+def user_profile():
+    return {
+        "code": 0,
+        "msg": "获取个人数据成功",
+        "data": current_user.json(),
+    }

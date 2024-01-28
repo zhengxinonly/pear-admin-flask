@@ -1,5 +1,3 @@
-from copy import deepcopy
-
 from flask import Blueprint, request
 from flask_sqlalchemy.pagination import Pagination
 

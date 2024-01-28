@@ -19,9 +19,9 @@ def user_lookup_callback(_jwt_header, jwt_data):
 
 @jwt.expired_token_loader
 def expired_token_callback():
-    return redirect("/login")
+    return {"msg": "token 已过期，请重新登录", "code": -1}, 403
 
 
 @jwt.unauthorized_loader
 def missing_token_callback(error):
-    return redirect("/login")
+    return {"msg": "操作未授权，请重新登录", "code": -1}, 403

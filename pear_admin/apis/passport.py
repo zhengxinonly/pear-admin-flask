@@ -1,16 +1,12 @@
 from collections import OrderedDict
 from copy import deepcopy
 
-from flask import Blueprint, make_response, redirect, request
+from flask import Blueprint, make_response, request
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
     get_current_user,
     jwt_required,
-    set_access_cookies,
-    set_refresh_cookies,
-    unset_access_cookies,
-    unset_refresh_cookies,
 )
 
 from pear_admin.extensions import db
@@ -35,10 +31,14 @@ def login_in():
     access_token = create_access_token(user)
     refresh_token = create_refresh_token(user)
 
-    response = make_response({"code": 0, "message": "登录成功"})
-
-    set_access_cookies(response, access_token)
-    set_refresh_cookies(response, refresh_token)
+    response = make_response(
+        {
+            "code": 0,
+            "message": "登录成功",
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+        }
+    )
 
     return response
 
@@ -46,10 +46,7 @@ def login_in():
 @passport_api.route("/logout", methods=["GET", "POST"])
 @jwt_required()
 def logout():
-    response = make_response(redirect("/login"))
-    unset_access_cookies(response)
-    unset_refresh_cookies(response)
-    return response
+    return {"msg": "退出登录成功", "code": 0}
 
 
 @passport_api.get("/menu")

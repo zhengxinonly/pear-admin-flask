@@ -2,7 +2,7 @@
 <html lang="zh-cn">
   <head>
     <meta charset="utf-8" />
-    <title>用户管理</title>
+    <title>权限管理</title>
     <meta name="renderer" content="webkit" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta
@@ -16,16 +16,16 @@
         <div class="layui-card-body">
           <table
             class="layui-hide"
-            id="user-table"
-            lay-filter="user-table"
+            id="role-table"
+            lay-filter="role-table"
           ></table>
         </div>
       </div>
     </div>
     <form
       class="layui-form"
-      lay-filter="user-form"
-      id="user-form"
+      lay-filter="role-form"
+      id="role-form"
       action=""
       style="padding: 15px; display: none"
     >
@@ -48,7 +48,7 @@
         <div class="layui-input-block">
           <input
             type="text"
-            name="username"
+            name="name"
             placeholder="请输入用户名"
             lay-verify="required"
             autocomplete="off"
@@ -57,11 +57,11 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">昵称</label>
+        <label class="layui-form-label">标识</label>
         <div class="layui-input-block">
           <input
             type="text"
-            name="nickname"
+            name="code"
             placeholder="请输入用户标识"
             lay-verify="required"
             autocomplete="off"
@@ -70,11 +70,11 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">手机号</label>
+        <label class="layui-form-label">描述</label>
         <div class="layui-input-block">
           <input
             type="text"
-            name="mobile"
+            name="desc"
             placeholder="请输入用户描述"
             autocomplete="off"
             class="layui-input"
@@ -82,28 +82,14 @@
         </div>
       </div>
       <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
+        <label class="layui-form-label">权限列表</label>
         <div class="layui-input-block">
           <input
             type="text"
-            name="email"
+            name="rights_ids"
             placeholder="请输入用户权限列表"
             autocomplete="off"
             class="layui-input"
-          />
-        </div>
-      </div>
-      <div class="layui-form-item">
-        <label class="layui-form-label">创建时间</label>
-        <div class="layui-input-block">
-          <input
-            type="text"
-            name="create_at"
-            class="layui-input"
-            id="form_create_at"
-            placeholder="yyyy-MM-dd HH:mm:ss"
-            autocomplete="off"
-            lay-verify="required"
           />
         </div>
       </div>
@@ -113,7 +99,7 @@
             type="submit"
             class="layui-btn"
             lay-submit
-            lay-filter="user-form-btn"
+            lay-filter="role-form-btn"
           >
             立即提交
           </button>
@@ -121,93 +107,125 @@
         </div>
       </div>
     </form>
-    <script type="text/html" id="user-toolbar">
+    <script type="text/html" id="role-toolbar">
       <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="user-toolbar-add">
+        <button class="layui-btn layui-btn-sm" lay-event="role-toolbar-add">
           新增角色
         </button>
       </div>
     </script>
-    <script type="text/html" id="user-tool">
+    <script type="text/html" id="role-tool">
       <div class="layui-btn-container">
         <button
           class="layui-btn layui-btn-sm layui-bg-blue"
-          lay-event="user-tool-edit"
+          lay-event="role-tool-edit"
         >
           编辑
         </button>
         <button
           class="layui-btn layui-btn-sm layui-bg-yellow"
-          lay-event="user-tool-detail"
+          lay-event="role-tool-detail"
         >
           授权
         </button>
         <button
           class="layui-btn layui-btn-sm layui-bg-red"
-          lay-event="user-tool-del"
+          lay-event="role-tool-del"
         >
           删除
         </button>
       </div>
     </script>
+
+    <!--授权表格-->
+    <form
+      class="layui-form"
+      action=""
+      style="display: none"
+      id="role-rights-form"
+      lay-filter="role-rights-form"
+    >
+      <div class="row" style="margin: 10px 5px">
+        <ul id="role_rights" class="dtree" data-id="0"></ul>
+      </div>
+      <div class="bottom">
+        <div class="button-container">
+          <button
+            type="submit"
+            class="layui-btn layui-btn-primary layui-btn-sm"
+            lay-submit
+            lay-filter="role-rights-save"
+          >
+            <i class="layui-icon layui-icon-ok"></i>
+            提交
+          </button>
+          <button type="reset" class="layui-btn layui-btn-sm">
+            <i class="layui-icon layui-icon-refresh"></i>
+            重置
+          </button>
+        </div>
+      </div>
+    </form>
+
     <script>
       layui.use(function () {
         var table = layui.table;
         var $ = layui.$;
         var form = layui.form;
-        var laydate = layui.laydate;
+        let tree = layui.tree;
+
+        let role_id = -1;
 
         table.render({
-          elem: "#user-table",
-          id: "user-table",
-          url: "/api/v1/user", // 此处为静态模拟数据，实际使用时需换成真实接口
+          elem: "#role-table",
+          id: "role-table",
+          url: "/api/v1/role", // 此处为静态模拟数据，实际使用时需换成真实接口
           height: "full-35", // 最大高度减去其他容器已占有的高度差
-          toolbar: "#user-toolbar",
+          toolbar: "#role-toolbar",
           page: true,
           cols: [
             [
               //标题栏
               { field: "id", title: "ID", width: 80, sort: true },
-              { field: "username", title: "用户名", width: 120 },
-              { field: "nickname", title: "昵称", width: 120 },
-              { field: "mobile", title: "手机号", width: 160 },
-              { field: "email", title: "邮箱", width: 120 },
-              { field: "create_at", title: "创建时间", width: 180 },
+              { field: "name", title: "用户名", width: 120 },
+              { field: "code", title: "用户标识", width: 160 },
+              { field: "desc", title: "描述", maxWidth: 120 },
+              { field: "ids", title: "权限列表", width: 100 },
               {
                 fixed: "right",
                 title: "操作",
                 width: 180,
                 align: "center",
-                toolbar: "#user-tool",
+                toolbar: "#role-tool",
               },
             ],
           ],
         });
 
-        table.on("toolbar(user-table)", function (obj) {
-          if (obj.event === "user-toolbar-add") {
+        table.on("toolbar(role-table)", function (obj) {
+          if (obj.event === "role-toolbar-add") {
             layer.open({
               type: 1,
               shade: false,
-              content: $("#user-form"),
+              content: $("#role-form"),
               area: ["50%", "80%"],
             });
-            form.render($("#user-form"));
+            form.render($("#role-form"));
           }
         });
 
-        table.on("tool(user-table)", function (obj) {
-          if (obj.event === "user-tool-edit") {
-            form.val("user-form", obj.data);
+        table.on("tool(role-table)", function (obj) {
+          if (obj.event === "role-tool-edit") {
+            form.val("role-form", obj.data);
             layer.open({
               type: 1,
               shade: false,
-              content: $("#user-form"),
+              content: $("#role-form"),
               area: ["50%", "80%"],
             });
-          } else if (obj.event === "user-tool-del") {
+          } else if (obj.event === "role-tool-del") {
             $.ajax({
-              url: `/api/v1/user/${obj.data.id}`,
+              url: `/api/v1/role/${obj.data.id}`,
               type: "DELETE",
               contentType: "application/json",
               headers: {
@@ -215,32 +233,55 @@
               },
               success: function (res) {
                 if (!res.code) {
-                  table.reloadData("user-table");
+                  table.reloadData("role-table");
                 }
               },
             });
-          } else if (obj.event === "user-tool-detail") {
-            // 用户授权
+          } else if (obj.event === "role-tool-detail") {
+            //  角色授权 role-tool-detail
+            role_id = obj.data["id"];
+            $.ajax({
+              url: "/api/v1/rights?type=tree",
+              type: "get",
+              success: function (ret) {
+                // 渲染组件数据
+                tree.render({
+                  elem: "#role_rights",
+                  id: "role_rights",
+                  data: ret.data,
+                  showCheckbox: true,
+                });
+                // 获取需要授权角色的权限数据
+                $.ajax({
+                  url: `/api/v1/role/role_rights/${role_id}?type=tree`,
+                  type: "get",
+                  success: function (ret) {
+                    tree.setChecked("role_rights", ret.data);
+                  },
+                });
+              },
+            });
+
             layer.open({
-              type: 2,
+              type: 1,
               title: "授权",
-              shade: 0.1,
+              shade: false,
               area: ["500px", "500px"],
-              content: "/views/user_role/" + obj.data["id"],
+              content: $("#role-rights-form"),
             });
           }
         });
 
-        form.on("submit(user-form-btn)", function (data) {
+        form.on("submit(role-form-btn)", function (data) {
           var field = data.field;
           let method, url;
           if (field.id == 0) {
             field.id = null;
             method = "POST";
-            url = "/api/v1/user";
+            url = "/api/v1/role";
           } else {
             method = "PUT";
-            url = `/api/v1/user/${field.id}`;
+            url = `/api/v1/role/${field.id}`;
           }
           $.ajax({
             url: url,
@@ -253,17 +294,48 @@
             success: function (res) {
               if (!res.code) {
                 layer.closeAll();
-                table.reloadData("user-table");
+                table.reloadData("role-table");
               }
             },
           });
           return false;
         });
 
-        // form_create_at
-        laydate.render({
-          elem: "#form_create_at",
-          type: "datetime",
+        function get_id(list_tree_data) {
+          if (Array.isArray(list_tree_data)) {
+            let ret = [];
+            $.each(list_tree_data, function (index, item) {
+              if (item?.children) {
+                ret.push(...get_id(item.children));
+              }
+              ret.push(...get_id(item));
+            });
+            return ret;
+          } else {
+            return [list_tree_data.id];
+          }
+        }
+
+        form.on("submit(role-rights-save)", function (data) {
+          let param = tree.getChecked("role_rights"); // 获取选中节点的数据
+          let rights_ids = get_id(param).join();
+          $.ajax({
+            url: `/api/v1/role/role_rights/${role_id}`,
+            data: JSON.stringify({ rights_ids: rights_ids }),
+            dataType: "json",
+            contentType: "application/json",
+            type: "put",
+            success: function (result) {
+              if (result.code === 0) {
+                layer.msg(result.message, { icon: 1, time: 1000 }, function () {
+                  layer.closeAll();
+                });
+              } else {
+                layer.msg(result.message, { icon: 2, time: 1000 });
+              }
+            },
+          });
+          return false;
         });
       });
     </script>
