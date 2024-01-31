@@ -120,24 +120,21 @@
         var admin = layui.admin;
         var popup = layui.popup;
 
-        // 请求后端，严重是否已经登录
-        fetch("/api/v1/user/profile", {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("access_token"),
-          },
-        })
-          .then((res) => res.json())
-          .then(function (data) {
-            if (data.code !== 0) {
-              location.href = "/view/login.html";
-            }
-          });
-
         // 给 pear-admin-layui 的默认 ajax 请求添加权限
         $.ajaxSetup({
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+        });
+
+        // 请求后端，严重是否已经登录
+        $.ajax({
+          type: "GET",
+          url: "/api/v1/user/profile",
+          success: function (data) {
+            if (data.code !== 0) {
+              location.href = "/view/login.html";
+            }
           },
         });
 

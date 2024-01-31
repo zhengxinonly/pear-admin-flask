@@ -63,8 +63,8 @@ def rights_list():
                 data["children"].append(child_data)
                 data["isParent"] = True
             ret.append(data)
-        return {"code": 0, "message": "请求权限数据成功", "count": pages.total, "data": ret}
-    return {"code": 0, "message": "请求权限数据成功，"}
+        return {"code": 0, "msg": "请求权限数据成功", "count": pages.total, "data": ret}
+    return {"code": 0, "msg": "请求权限数据成功，"}
 
 
 @rights_api.post("/rights")
@@ -77,7 +77,7 @@ def create_rights():
         data["sort"] = int(data["sort"])
     rights_obj = RightsORM(**data)
     rights_obj.save()
-    return {"code": 0, "message": "新增权限数据成功"}
+    return {"code": 0, "msg": "新增权限数据成功"}
 
 
 @rights_api.put("/rights/<int:rid>")
@@ -90,7 +90,7 @@ def change_rights(rid):
     for key, value in data.items():
         setattr(rights_obj, key, value)
     rights_obj.save()
-    return {"code": 0, "message": "修改权限数据成功"}
+    return {"code": 0, "msg": "修改权限数据成功"}
 
 
 @rights_api.delete("/rights/<int:rid>")
@@ -98,4 +98,4 @@ def change_rights(rid):
 def delete_rights(rid):
     rights_obj = RightsORM.query.get(rid)
     rights_obj.delete()
-    return {"code": 0, "message": "删除权限数据成功"}
+    return {"code": 0, "msg": "删除权限数据成功"}

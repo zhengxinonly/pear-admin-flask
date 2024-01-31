@@ -17,7 +17,7 @@ def role_list():
 
     return {
         "code": 0,
-        "message": "获取角色数据成功",
+        "msg": "获取角色数据成功",
         "data": [item.json() for item in pages.items],
         "count": pages.total,
     }
@@ -30,7 +30,7 @@ def create_role():
         del data["id"]
     role = RoleORM(**data)
     role.save()
-    return {"code": 0, "message": "新增角色成功"}
+    return {"code": 0, "msg": "新增角色成功"}
 
 
 @role_api.put("/role/<int:rid>")
@@ -42,14 +42,14 @@ def change_role(rid):
     for key, value in data.items():
         setattr(role_obj, key, value)
     role_obj.save()
-    return {"code": 0, "message": "修改角色权限成功"}
+    return {"code": 0, "msg": "修改角色权限成功"}
 
 
 @role_api.delete("/role/<int:rid>")
 def del_role(rid):
     role_obj = RoleORM.query.get(rid)
     role_obj.delete()
-    return {"code": 0, "message": "删除角色成功"}
+    return {"code": 0, "msg": "删除角色成功"}
 
 
 @role_api.get("/role/role_rights/<int:rid>")
@@ -61,7 +61,7 @@ def role_rights(rid):
 
     return {
         "code": 0,
-        "message": "返回角色权限数据成功",
+        "msg": "返回角色权限数据成功",
         "data": own_rights_list,
     }
 
@@ -79,4 +79,4 @@ def change_role_rights(rid):
     ).all()
     role.rights_list = [r[0] for r in rights_obj_list]
     role.save()
-    return {"code": 0, "message": "授权成功"}
+    return {"code": 0, "msg": "授权成功"}

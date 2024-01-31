@@ -20,7 +20,7 @@ def user_list():
 
     return {
         "code": 0,
-        "message": "获取用户数据成功",
+        "msg": "获取用户数据成功",
         "data": [item.json() for item in pages.items],
         "count": pages.total,
     }
@@ -37,7 +37,7 @@ def create_user():
         role.create_at = datetime.strptime(create_at, "%Y-%m-%d %H:%M:%S")
     role.password = "123456"
     role.save()
-    return {"code": 0, "message": "新增用户成功"}
+    return {"code": 0, "msg": "新增用户成功"}
 
 
 @user_api.put("/user/<int:uid>")
@@ -51,14 +51,14 @@ def change_user(uid):
             value = datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
         setattr(user_obj, key, value)
     user_obj.save()
-    return {"code": 0, "message": "修改用户信息成功"}
+    return {"code": 0, "msg": "修改用户信息成功"}
 
 
 @user_api.delete("/user/<int:rid>")
 def del_user(rid):
     user_obj = UserORM.query.get(rid)
     user_obj.delete()
-    return {"code": 0, "message": "删除用户成功"}
+    return {"code": 0, "msg": "删除用户成功"}
 
 
 @user_api.get("/user/user_role/<int:uid>")
@@ -71,7 +71,7 @@ def get_user_role(uid):
 
     return {
         "code": 0,
-        "message": "返回角色权限数据成功",
+        "msg": "返回角色权限数据成功",
         "data": wn_role_list,
     }
 
@@ -89,7 +89,7 @@ def change_user_role(rid):
     ).all()
     user.role_list = [r[0] for r in role_obj_list]
     user.save()
-    return {"code": 0, "message": "授权成功"}
+    return {"code": 0, "msg": "授权成功"}
 
 
 @user_api.get("/user/profile")

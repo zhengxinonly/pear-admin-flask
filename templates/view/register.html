@@ -159,7 +159,7 @@
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
               btn.stop(function () {
-                popup.failure(XMLHttpRequest.responseJSON.message);
+                popup.failure(XMLHttpRequest.responseJSON.msg);
               });
             },
           });

@@ -33,7 +33,7 @@ def department_list():
 
     return {
         "code": 0,
-        "message": "获取部门数据成功",
+        "msg": "获取部门数据成功",
         "data": [item.json() for item in pages.items],
         "count": pages.total,
     }
@@ -46,7 +46,7 @@ def create_department():
         del data["id"]
     department = DepartmentORM(**data)
     department.save()
-    return {"code": 0, "message": "新增部门成功"}
+    return {"code": 0, "msg": "新增部门成功"}
 
 
 @department_api.put("/department/<int:rid>")
@@ -58,11 +58,11 @@ def change_department(rid):
     for key, value in data.items():
         setattr(department_obj, key, value)
     department_obj.save()
-    return {"code": 0, "message": "修改部门成功"}
+    return {"code": 0, "msg": "修改部门成功"}
 
 
 @department_api.delete("/department/<int:rid>")
 def del_department(rid):
     department_obj = DepartmentORM.query.get(rid)
     department_obj.delete()
-    return {"code": 0, "message": "删除删除成功"}
+    return {"code": 0, "msg": "删除删除成功"}

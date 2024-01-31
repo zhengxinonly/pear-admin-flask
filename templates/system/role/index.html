@@ -327,11 +327,11 @@
             type: "put",
             success: function (result) {
               if (result.code === 0) {
-                layer.msg(result.message, { icon: 1, time: 1000 }, function () {
+                layer.msg(result.msg, { icon: 1, time: 1000 }, function () {
                   layer.closeAll();
                 });
               } else {
-                layer.msg(result.message, { icon: 2, time: 1000 });
+                layer.msg(result.msg, { icon: 2, time: 1000 });
               }
             },
           });

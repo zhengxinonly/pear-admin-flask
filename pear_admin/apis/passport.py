@@ -34,7 +34,7 @@ def login_in():
     response = make_response(
         {
             "code": 0,
-            "message": "登录成功",
+            "msg": "登录成功",
             "access_token": access_token,
             "refresh_token": refresh_token,
         }
