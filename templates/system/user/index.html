@@ -218,6 +218,7 @@
 
         table.on("toolbar(user-table)", function (obj) {
           if (obj.event === "user-toolbar-add") {
+            $("#user-form")[0].reset();
             layer.open({
               type: 1,
               shade: false,

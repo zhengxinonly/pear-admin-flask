@@ -204,6 +204,7 @@
 
         table.on("toolbar(role-table)", function (obj) {
           if (obj.event === "role-toolbar-add") {
+            $("#role-form")[0].reset();
             layer.open({
               type: 1,
               shade: false,

@@ -279,6 +279,7 @@
 
         treeTable.on("toolbar(rights-table)", function (obj) {
           if (obj.event === "rights-toolbar-add") {
+            $("#rights-form")[0].reset();
             layer.open({
               type: 1,
               shade: false,
