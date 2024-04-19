@@ -136,6 +136,9 @@
               location.href = "/view/login.html";
             }
           },
+          error: function (error) {
+            location.href = "/view/login.html";
+          },
         });
 
         admin.setConfigurationPath("/static/config/pear.config.json");
@@ -143,16 +146,20 @@
         admin.render();
 
         admin.logout(function () {
-          popup.success("注销成功", function () {
-            fetch("/api/v1/logout")
-              .then((res) => res.json())
-              .then(function (data) {
-                if (data.code !== 0) {
-                  localStorage.removeItem("access_token");
-                  localStorage.removeItem("refresh_token");
+          $.ajax({
+            type: "GET",
+            url: "/api/v1/logout",
+            success: function (data) {
+              console.log(data);
+              if (data.code === 0) {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                popup.success("注销成功");
+                setTimeout(function () {
                   location.href = "/view/login.html";
-                }
-              });
+                }, 1000);
+              }
+            },
           });
 
           // 清空 tabs 缓存
