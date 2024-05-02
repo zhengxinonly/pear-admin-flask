@@ -7,10 +7,10 @@ from flask_sqlalchemy.pagination import Pagination
 from pear_admin.extensions import db
 from pear_admin.orms import RoleORM, UserORM
 
-user_api = Blueprint("user", __name__)
+user_api = Blueprint("user", __name__, url_prefix="/user")
 
 
-@user_api.get("/user")
+@user_api.get("/")
 def user_list():
     page = request.args.get("page", default=1, type=int)
     per_page = request.args.get("limit", default=10, type=int)
@@ -26,7 +26,7 @@ def user_list():
     }
 
 
-@user_api.post("/user")
+@user_api.post("/")
 def create_user():
     data = request.get_json()
     if data["id"]:
@@ -40,9 +40,11 @@ def create_user():
     return {"code": 0, "msg": "新增用户成功"}
 
 
-@user_api.put("/user/<int:uid>")
-def change_user(uid):
+@user_api.put("/<int:uid>")
+@user_api.put("/")
+def change_user(uid=None):
     data = request.get_json()
+    uid = data["id"]
     del data["id"]
 
     user_obj = UserORM.query.get(uid)
@@ -54,14 +56,14 @@ def change_user(uid):
     return {"code": 0, "msg": "修改用户信息成功"}
 
 
-@user_api.delete("/user/<int:rid>")
+@user_api.delete("/<int:rid>")
 def del_user(rid):
     user_obj = UserORM.query.get(rid)
     user_obj.delete()
     return {"code": 0, "msg": "删除用户成功"}
 
 
-@user_api.get("/user/user_role/<int:uid>")
+@user_api.get("/user_role/<int:uid>")
 def get_user_role(uid):
     user: UserORM = db.session.execute(
         db.select(UserORM).where(UserORM.id == uid)
@@ -76,7 +78,7 @@ def get_user_role(uid):
     }
 
 
-@user_api.put("/user/user_role/<int:rid>")
+@user_api.put("/user_role/<int:rid>")
 def change_user_role(rid):
     role_ids = request.json.get("rights_ids", "")
     role_list = role_ids.split(",")
@@ -92,7 +94,7 @@ def change_user_role(rid):
     return {"code": 0, "msg": "授权成功"}
 
 
-@user_api.get("/user/profile")
+@user_api.get("/profile")
 @jwt_required()
 def user_profile():
     return {

@@ -4,10 +4,10 @@ from flask_sqlalchemy.pagination import Pagination
 from pear_admin.extensions import db
 from pear_admin.orms import RightsORM, RoleORM
 
-role_api = Blueprint("role", __name__)
+role_api = Blueprint("role", __name__, url_prefix="/role")
 
 
-@role_api.get("/role")
+@role_api.get("/")
 def role_list():
     page = request.args.get("page", default=1, type=int)
     per_page = request.args.get("limit", default=10, type=int)
@@ -23,7 +23,7 @@ def role_list():
     }
 
 
-@role_api.post("/role")
+@role_api.post("/")
 def create_role():
     data = request.get_json()
     if data["id"]:
@@ -33,9 +33,11 @@ def create_role():
     return {"code": 0, "msg": "新增角色成功"}
 
 
-@role_api.put("/role/<int:rid>")
-def change_role(rid):
+@role_api.put("/<int:rid>")
+@role_api.put("/")
+def change_role(rid=None):
     data = request.get_json()
+    rid = data["id"]
     del data["id"]
 
     role_obj = RoleORM.query.get(rid)
@@ -45,14 +47,14 @@ def change_role(rid):
     return {"code": 0, "msg": "修改角色权限成功"}
 
 
-@role_api.delete("/role/<int:rid>")
+@role_api.delete("/<int:rid>")
 def del_role(rid):
     role_obj = RoleORM.query.get(rid)
     role_obj.delete()
     return {"code": 0, "msg": "删除角色成功"}
 
 
-@role_api.get("/role/role_rights/<int:rid>")
+@role_api.get("/role_rights/<int:rid>")
 def role_rights(rid):
     role: RoleORM = db.session.execute(
         db.select(RoleORM).where(RoleORM.id == rid)
@@ -66,7 +68,7 @@ def role_rights(rid):
     }
 
 
-@role_api.put("/role/role_rights/<int:rid>")
+@role_api.put("/role_rights/<int:rid>")
 def change_role_rights(rid):
     rights_ids = request.json.get("rights_ids", "")
 

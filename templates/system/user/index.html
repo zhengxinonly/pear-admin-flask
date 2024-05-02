@@ -192,13 +192,12 @@
         table.render({
           elem: "#user-table",
           id: "user-table",
-          url: "/api/v1/user", // 此处为静态模拟数据，实际使用时需换成真实接口
-          height: "full-35", // 最大高度减去其他容器已占有的高度差
+          url: "/api/v1/user",
+          height: "full-35",
           toolbar: "#user-toolbar",
           page: true,
           cols: [
             [
-              //标题栏
               { field: "id", title: "ID", width: 80, sort: true },
               { field: "username", title: "用户名", width: 120 },
               { field: "nickname", title: "昵称", width: 120 },
@@ -284,7 +283,6 @@
               title: "授权",
               shade: false,
               area: ["500px", "500px"],
-              // content: "/views/user_role/" + obj.data["id"]
               content: $("#user-role-form"),
             });
           }
@@ -305,9 +303,6 @@
             url: url,
             type: method,
             contentType: "application/json",
-            headers: {
-              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-            },
             data: JSON.stringify(field),
             success: function (res) {
               if (!res.code) {

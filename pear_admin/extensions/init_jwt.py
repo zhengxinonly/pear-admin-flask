@@ -1,4 +1,3 @@
-from flask import redirect
 from flask_jwt_extended import JWTManager
 
 from pear_admin.orms.user import UserORM

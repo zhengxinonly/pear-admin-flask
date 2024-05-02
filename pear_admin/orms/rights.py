@@ -1,5 +1,3 @@
-from sqlalchemy.orm import backref
-
 from pear_admin.extensions import db
 
 from ._base import BaseORM

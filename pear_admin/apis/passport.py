@@ -10,7 +10,7 @@ from flask_jwt_extended import (
 )
 
 from pear_admin.extensions import db
-from pear_admin.orms import RightsORM, RoleORM, UserORM
+from pear_admin.orms import UserORM
 
 passport_api = Blueprint("passport", __name__)
 

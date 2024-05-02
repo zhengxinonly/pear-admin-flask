@@ -137,7 +137,7 @@
       </div>
     </script>
 
-    <!--授权表格-->
+    <!--授权表单-->
     <form
       class="layui-form"
       action=""
@@ -229,9 +229,6 @@
               url: `/api/v1/role/${obj.data.id}`,
               type: "DELETE",
               contentType: "application/json",
-              headers: {
-                "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-              },
               success: function (res) {
                 if (!res.code) {
                   table.reloadData("role-table");
@@ -242,7 +239,7 @@
             //  角色授权 role-tool-detail
             role_id = obj.data["id"];
             $.ajax({
-              url: "/api/v1/rights?type=tree",
+              url: "/api/v1/rights/tree",
               type: "get",
               success: function (ret) {
                 // 渲染组件数据
@@ -252,9 +249,10 @@
                   data: ret.data,
                   showCheckbox: true,
                 });
+
                 // 获取需要授权角色的权限数据
                 $.ajax({
-                  url: `/api/v1/role/role_rights/${role_id}?type=tree`,
+                  url: `/api/v1/role/role_rights/${role_id}`,
                   type: "get",
                   success: function (ret) {
                     tree.setChecked("role_rights", ret.data);
@@ -288,9 +286,6 @@
             url: url,
             type: method,
             contentType: "application/json",
-            headers: {
-              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-            },
             data: JSON.stringify(field),
             success: function (res) {
               if (!res.code) {

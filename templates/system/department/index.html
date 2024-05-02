@@ -22,6 +22,7 @@
         </div>
       </div>
     </div>
+
     <form
       class="layui-form"
       lay-filter="department-form"
@@ -119,6 +120,7 @@
         </button>
       </div>
     </script>
+
     <script type="text/html" id="department-tool">
       <div class="layui-btn-container">
         <button
@@ -144,8 +146,8 @@
         treeTable.render({
           elem: "#department-table",
           id: "department-table",
-          url: "/api/v1/department?type=tree", // 此处为静态模拟数据，实际使用时需换成真实接口
-          height: "full-35", // 最大高度减去其他容器已占有的高度差
+          url: "/api/v1/department/treetable",
+          height: "full-35",
           toolbar: "#department-toolbar",
           page: true,
           cols: [
@@ -193,9 +195,6 @@
               url: `/api/v1/department/${obj.data.id}`,
               type: "DELETE",
               contentType: "application/json",
-              headers: {
-                "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-              },
               success: function (res) {
                 if (!res.code) {
                   treeTable.reloadData("department-table");
@@ -210,24 +209,18 @@
 
           data.field.enable = data.field.enable === "on";
           let method, url;
-          if (field.pid === "") {
-            field.pid = null;
-          }
           if (field.id == 0) {
             field.id = null;
             method = "POST";
-            url = "/api/v1/department";
+            url = "/api/v1/department/";
           } else {
             method = "PUT";
-            url = `/api/v1/department/${field.id}`;
+            url = `/api/v1/department/`;
           }
           $.ajax({
             url: url,
             type: method,
             contentType: "application/json",
-            headers: {
-              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-            },
             data: JSON.stringify(field),
             success: function (res) {
               if (!res.code) {

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, send_file, send_from_directory
+from flask import Blueprint, render_template, send_from_directory
 
 index_bp = Blueprint("index", __name__)
 

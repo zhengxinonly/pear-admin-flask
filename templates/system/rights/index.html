@@ -213,8 +213,8 @@
         treeTable.render({
           elem: "#rights-table",
           id: "rights-table",
-          url: "/api/v1/rights?type=treetable", // 此处为静态模拟数据，实际使用时需换成真实接口
-          height: "full-35", // 最大高度减去其他容器已占有的高度差
+          url: "/api/v1/rights/treetable",
+          height: "full-35",
           toolbar: "#rights-toolbar",
           cols: [
             [
@@ -298,7 +298,7 @@
           if (field.id == 0) {
             field.id = null;
             method = "POST";
-            url = "/api/v1/rights";
+            url = "/api/v1/rights/";
 
             if (field.type === "path") {
               if (!/\//.test(field.url)) {
@@ -314,15 +314,12 @@
             }
           } else {
             method = "PUT";
-            url = `/api/v1/rights/${field.id}`;
+            url = `/api/v1/rights/`;
           }
           $.ajax({
             url: url,
             type: method,
             contentType: "application/json",
-            headers: {
-              "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-            },
             data: JSON.stringify(field),
             success: function (res) {
               if (!res.code) {
@@ -350,9 +347,6 @@
               url: `/api/v1/rights/${obj.data.id}`,
               type: "DELETE",
               contentType: "application/json",
-              headers: {
-                "X-CSRF-TOKEN": getCookie("csrf_access_token"),
-              },
               success: function (res) {
                 if (!res.code) {
                   treeTable.reloadData("rights-table");

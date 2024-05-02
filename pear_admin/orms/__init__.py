@@ -18,3 +18,5 @@ role_rights = db.Table(
     db.Column("rights_id", db.Integer, db.ForeignKey("ums_rights.id"), comment="用户编号"),
     db.Column("role_id", db.Integer, db.ForeignKey("ums_role.id"), comment="角色编号"),
 )
+
+__all__ = ["DepartmentORM", "RightsORM", "RoleORM", "UserORM"]
